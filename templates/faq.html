@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Frequently Asked Questions</h1>
+        <p class="lead text-muted">Find answers to common questions about PDF to Word conversion</p>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="accordion" id="faqAccordion">
+                
+                <!-- General Questions -->
+                <div class="faq-category mb-4">
+                    <h3 class="text-primary mb-3">General Questions</h3>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Is the PDF to Word converter completely free?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, our PDF to Word converter is completely free to use. There are no hidden charges, subscription fees, or premium features. You can convert as many PDF files as you need without any cost.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Do I need to create an account or register?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                No registration is required. You can start converting PDF files immediately without creating an account or providing any personal information. This ensures your privacy and makes the process quick and hassle-free.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How long does the conversion process take?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Most PDF files are converted within 15-60 seconds, depending on the file size and complexity. Simple text-based PDFs convert faster, while scanned documents requiring OCR processing may take a bit longer. You can track the progress in real-time.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File & Format Questions -->
+                <div class="faq-category mb-4">
+                    <h3 class="text-success mb-3">File & Format Questions</h3>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                What is the maximum file size I can upload?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The maximum file size is 20MB. This limit ensures fast processing and optimal performance. If your PDF file is larger, consider splitting it into smaller sections or compressing it before uploading.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                Can you convert scanned PDF documents?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! Our converter includes advanced OCR (Optical Character Recognition) technology that can extract text from scanned PDF documents, images, and photographs. The OCR accuracy is typically 95%+ for clear, well-scanned documents.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                What format is the output file?
+                            </button>
+                        </h2>
+                        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The output file is in Microsoft Word format (.docx). This format is compatible with Microsoft Word, Google Docs, LibreOffice Writer, and most other word processing applications.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                Are images and formatting preserved?
+                            </button>
+                        </h2>
+                        <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, our converter preserves images, charts, graphics, and basic formatting from your PDF. We maintain the document structure, fonts, and layout as much as possible. However, very complex layouts might require minor adjustments.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Privacy -->
+                <div class="faq-category mb-4">
+                    <h3 class="text-warning mb-3">Security & Privacy</h3>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                Is my data safe and secure?
+                            </button>
+                        </h2>
+                        <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Absolutely. All files are processed using secure, encrypted connections. Your uploaded files and converted documents are automatically deleted from our servers after 1 hour. We do not store, share, or access your documents.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                                Can you convert password-protected PDFs?
+                            </button>
+                        </h2>
+                        <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Currently, our converter cannot process password-protected or encrypted PDF files. You'll need to remove the password protection from your PDF before uploading it for conversion.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
+                                How long do you keep my files?
+                            </button>
+                        </h2>
+                        <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                All uploaded and converted files are automatically deleted from our servers after 1 hour. This ensures your privacy and keeps our systems running efficiently. We recommend downloading your converted file immediately after conversion.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Issues -->
+                <div class="faq-category mb-4">
+                    <h3 class="text-danger mb-3">Technical Issues</h3>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq11">
+                                What should I do if the conversion fails?
+                            </button>
+                        </h2>
+                        <div id="faq11" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                If conversion fails, try the following:
+                                <ul>
+                                    <li>Ensure your PDF file is not corrupted</li>
+                                    <li>Check that the file size is under 20MB</li>
+                                    <li>Make sure the PDF is not password-protected</li>
+                                    <li>Try refreshing the page and uploading again</li>
+                                    <li>If problems persist, try converting individual pages</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq12">
+                                Which browsers are supported?
+                            </button>
+                        </h2>
+                        <div id="faq12" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Our converter works with all modern web browsers including Chrome, Firefox, Safari, Edge, and Opera. For the best experience, we recommend using the latest version of your preferred browser.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq13">
+                                Can I use this on mobile devices?
+                            </button>
+                        </h2>
+                        <div id="faq13" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes! Our converter is fully responsive and works perfectly on smartphones and tablets. The interface adapts to your screen size for optimal usability on any device.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quality & Accuracy -->
+                <div class="faq-category mb-4">
+                    <h3 class="text-info mb-3">Quality & Accuracy</h3>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq14">
+                                How accurate is the conversion?
+                            </button>
+                        </h2>
+                        <div id="faq14" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Our conversion accuracy is typically 95%+ for standard documents. Text-based PDFs with simple layouts convert with near-perfect accuracy. Scanned documents and complex layouts may require minor manual adjustments after conversion.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq15">
+                                What if the converted document needs editing?
+                            </button>
+                        </h2>
+                        <div id="faq15" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                The converted Word document (.docx) is fully editable in Microsoft Word, Google Docs, or any compatible word processor. You can make any necessary adjustments to formatting, text, or layout after download.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Still have questions? -->
+    <div class="text-center mt-5">
+        <div class="bg-light rounded p-4">
+            <h4>Still have questions?</h4>
+            <p class="mb-3">Can't find the answer you're looking for? Try our converter and experience the quality for yourself!</p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-magic me-2"></i>Convert PDF to Word Now
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

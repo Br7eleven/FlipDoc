@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Fast PDF to Word Converter Online</h1>
+                <p class="lead mb-4">Convert PDF files to Word documents quickly and securely. Support for text and scanned PDFs with advanced OCR technology.</p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <div class="feature-badge">
+                        <i class="fas fa-shield-alt me-2"></i>Secure & Private
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-bolt me-2"></i>Lightning Fast
+                    </div>
+                    <div class="feature-badge">
+                        <i class="fas fa-eye me-2"></i>OCR Support
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="conversion-stats">
+                    <div class="stat-item">
+                        <h3>20MB</h3>
+                        <p>Max File Size</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>30s</h3>
+                        <p>Average Time</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>95%</h3>
+                        <p>Accuracy Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upload Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {% if job and job_id %}
+                    <!-- Status Display -->
+                    <div class="conversion-status-card">
+                        <h3><i class="fas fa-cogs me-2"></i>Conversion Status</h3>
+                        
+                        <div class="status-info mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">File: {{ job.original_filename }}</span>
+                                <span class="status-badge status-{{ job.status }}">{{ job.status.title() }}</span>
+                            </div>
+                            
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     role="progressbar" 
+                                     style="width: {{ job.progress }}%"
+                                     id="progressBar">
+                                    {{ job.progress }}%
+                                </div>
+                            </div>
+                            
+                            <p class="mb-0" id="statusMessage">{{ job.message }}</p>
+                            
+                            {% if job.error %}
+                                <div class="alert alert-danger mt-3">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>{{ job.error }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        {% if job.status == 'completed' %}
+                            <div class="text-center">
+                                <a href="{{ url_for('download_file', job_id=job_id) }}" 
+                                   class="btn btn-success btn-lg">
+                                    <i class="fas fa-download me-2"></i>Download Word Document
+                                </a>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-plus me-2"></i>Convert Another File
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        // Auto-refresh status for active conversions
+                        {% if job.status in ['uploaded', 'processing'] %}
+                            const jobId = '{{ job_id }}';
+                            const statusInterval = setInterval(updateStatus, 2000);
+                            
+                            function updateStatus() {
+                                fetch('/api/status/' + jobId)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        document.getElementById('progressBar').style.width = data.progress + '%';
+                                        document.getElementById('progressBar').textContent = data.progress + '%';
+                                        document.getElementById('statusMessage').textContent = data.message;
+                                        
+                                        if (data.status === 'completed' || data.status === 'failed') {
+                                            clearInterval(statusInterval);
+                                            location.reload();
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Status update error:', error);
+                                    });
+                            }
+                        {% endif %}
+                    </script>
+                {% else %}
+                    <!-- Upload Form -->
+                    <div class="upload-card">
+                        <div class="upload-area" id="uploadArea">
+                            <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" id="uploadForm">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h4>Drop your PDF file here</h4>
+                                <p class="text-muted">or click to browse files</p>
+                                <input type="file" name="file" accept=".pdf" required id="fileInput" class="file-input">
+                                <div class="file-requirements">
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Maximum file size: 20MB | Supported format: PDF
+                                    </small>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="selected-file" id="selectedFile" style="display: none;">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="file-info">
+                                    <i class="fas fa-file-pdf text-danger me-2"></i>
+                                    <span id="fileName"></span>
+                                    <small class="text-muted ms-2" id="fileSize"></small>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-danger" id="removeFile">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button type="submit" form="uploadForm" class="btn btn-primary btn-lg w-100 mt-3">
+                                <i class="fas fa-magic me-2"></i>Convert to Word
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why Choose Our PDF to Word Converter?</h2>
+            <p class="lead text-muted">Advanced technology for perfect conversions</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h5>OCR Technology</h5>
+                    <p>Extract text from scanned PDFs with high accuracy using advanced OCR.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h5>Lightning Fast</h5>
+                    <p>Convert PDF files to Word documents in seconds with our optimized engine.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5>Secure & Private</h5>
+                    <p>Your files are processed securely and automatically deleted after conversion.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h5>Format Preservation</h5>
+                    <p>Maintain original formatting, fonts, and layout in the converted document.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h5>Image Support</h5>
+                    <p>Preserve all images, charts, and graphics from your PDF files.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h5>Mobile Friendly</h5>
+                    <p>Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">How to Convert PDF to Word in 3 Easy Steps</h2>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">1</div>
+                    <h5>Upload PDF File</h5>
+                    <p>Drag and drop your PDF file or click to browse and select it from your device.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">2</div>
+                    <h5>Automatic Conversion</h5>
+                    <p>Our advanced engine processes your PDF and converts it to Word format with OCR if needed.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card text-center">
+                    <div class="step-number">3</div>
+                    <h5>Download Word File</h5>
+                    <p>Download your converted Word document and start editing immediately.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // File upload handling
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadForm = document.getElementById('uploadForm');
+    const selectedFile = document.getElementById('selectedFile');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const removeFile = document.getElementById('removeFile');
+
+    // Handle drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileSelection(files[0]);
+        }
+    });
+
+    // Handle click to browse
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // Handle file input change
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileSelection(e.target.files[0]);
+        }
+    });
+
+    // Handle file selection
+    function handleFileSelection(file) {
+        // Validate file type
+        if (!file.type.includes('pdf')) {
+            alert('Please select a PDF file.');
+            return;
+        }
+
+        // Validate file size (20MB)
+        if (file.size > 20 * 1024 * 1024) {
+            alert('File size must be less than 20MB.');
+            return;
+        }
+
+        // Display selected file
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        
+        uploadArea.style.display = 'none';
+        selectedFile.style.display = 'block';
+    }
+
+    // Remove selected file
+    removeFile.addEventListener('click', () => {
+        fileInput.value = '';
+        uploadArea.style.display = 'block';
+        selectedFile.style.display = 'none';
+    });
+
+    // Format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+</script>
+{% endblock %}

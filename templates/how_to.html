@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">How to Convert PDF to Word Document</h1>
+        <p class="lead text-muted">Complete step-by-step guide for perfect conversions</p>
+    </div>
+
+    <!-- Quick Steps -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="how-to-step">
+                <div class="step-number-large">1</div>
+                <h4>Upload Your PDF</h4>
+                <p>Drag and drop your PDF file onto the upload area or click to browse and select your file. Maximum file size is 20MB.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="how-to-step">
+                <div class="step-number-large">2</div>
+                <h4>Automatic Processing</h4>
+                <p>Our advanced engine analyzes your PDF and converts it to Word format. OCR is applied automatically for scanned documents.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="how-to-step">
+                <div class="step-number-large">3</div>
+                <h4>Download Result</h4>
+                <p>Once conversion is complete, download your Word document and start editing immediately in Microsoft Word or any compatible editor.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Instructions -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="mb-4">Detailed Instructions</h2>
+            
+            <div class="instruction-section">
+                <h4><i class="fas fa-upload text-primary me-2"></i>Step 1: Uploading Your PDF File</h4>
+                <p>There are two ways to upload your PDF file:</p>
+                <ul>
+                    <li><strong>Drag & Drop:</strong> Simply drag your PDF file from your computer and drop it onto the upload area on our homepage.</li>
+                    <li><strong>Browse & Select:</strong> Click on the upload area to open your file browser, then navigate to and select your PDF file.</li>
+                </ul>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>File Requirements:</strong> Only PDF files are accepted, with a maximum size of 20MB.
+                </div>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-cogs text-success me-2"></i>Step 2: Conversion Process</h4>
+                <p>Once you upload your file, the conversion process begins automatically:</p>
+                <ol>
+                    <li><strong>File Analysis:</strong> Our system analyzes the PDF structure and content type.</li>
+                    <li><strong>Text Extraction:</strong> Text is extracted using advanced algorithms.</li>
+                    <li><strong>OCR Processing:</strong> If needed, OCR technology extracts text from scanned images.</li>
+                    <li><strong>Image Processing:</strong> Images and graphics are extracted and optimized.</li>
+                    <li><strong>Word Generation:</strong> A properly formatted Word document is created.</li>
+                </ol>
+                <p>You can track the progress in real-time with our progress indicator.</p>
+            </div>
+
+            <div class="instruction-section">
+                <h4><i class="fas fa-download text-warning me-2"></i>Step 3: Downloading Your Word Document</h4>
+                <p>When conversion is complete:</p>
+                <ul>
+                    <li>You'll see a green "Download Word Document" button</li>
+                    <li>Click the button to download your converted file</li>
+                    <li>The file will be saved to your default download location</li>
+                    <li>Open the file in Microsoft Word, Google Docs, or any compatible word processor</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips for Best Results -->
+    <div class="bg-light rounded p-5 mt-5">
+        <h2 class="text-center mb-4">Tips for Best Conversion Results</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="tip-card">
+                    <h5><i class="fas fa-file-alt text-primary me-2"></i>For Text-Based PDFs</h5>
+                    <ul>
+                        <li>Ensure the PDF is not password-protected</li>
+                        <li>High-quality PDFs produce better results</li>
+                        <li>Simple layouts convert more accurately</li>
+                        <li>Standard fonts are preserved better</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="tip-card">
+                    <h5><i class="fas fa-camera text-success me-2"></i>For Scanned PDFs</h5>
+                    <ul>
+                        <li>Ensure good image quality and contrast</li>
+                        <li>Straight, non-skewed pages work best</li>
+                        <li>Clear, readable text improves OCR accuracy</li>
+                        <li>Avoid handwritten text for best results</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div class="mt-5">
+        <h2 class="text-center mb-4">Troubleshooting Common Issues</h2>
+        <div class="accordion" id="troubleshootingAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble1">
+                        File upload fails or times out
+                    </button>
+                </h2>
+                <div id="trouble1" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>If your file upload fails:</p>
+                        <ul>
+                            <li>Check that your file is under 20MB</li>
+                            <li>Ensure you have a stable internet connection</li>
+                            <li>Try refreshing the page and uploading again</li>
+                            <li>Make sure the file is a valid PDF format</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble2">
+                        Conversion takes too long
+                    </button>
+                </h2>
+                <div id="trouble2" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>Long conversion times may be due to:</p>
+                        <ul>
+                            <li>Large file size or many pages</li>
+                            <li>Complex layouts requiring detailed processing</li>
+                            <li>Scanned documents needing OCR processing</li>
+                            <li>High server load during peak times</li>
+                        </ul>
+                        <p>Please be patient, as quality conversions take time.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble3">
+                        Poor conversion quality
+                    </button>
+                </h2>
+                <div id="trouble3" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>To improve conversion quality:</p>
+                        <ul>
+                            <li>Use high-quality, clear PDF files</li>
+                            <li>Avoid heavily formatted or complex layouts</li>
+                            <li>Ensure scanned documents have good contrast</li>
+                            <li>Try converting individual pages if the document is very large</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center mt-5">
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-magic me-2"></i>Start Converting Your PDF
+        </a>
+    </div>
+</div>
+{% endblock %}

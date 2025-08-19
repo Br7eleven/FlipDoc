@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Advanced PDF Conversion Features</h1>
+        <p class="lead text-muted">Discover the powerful capabilities of our PDF to Word converter</p>
+    </div>
+
+    <!-- Main Features Grid -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+            <div class="feature-detail-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-eye text-primary"></i>
+                </div>
+                <h3>Advanced OCR Technology</h3>
+                <p>Our state-of-the-art Optical Character Recognition (OCR) technology can extract text from scanned PDFs with remarkable accuracy. Whether your PDF contains images of text, scanned documents, or mixed content, our OCR engine ensures precise text extraction.</p>
+                <ul class="feature-list">
+                    <li>Supports multiple languages</li>
+                    <li>High accuracy text recognition</li>
+                    <li>Handles complex layouts</li>
+                    <li>Preserves formatting structure</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="feature-detail-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-palette text-success"></i>
+                </div>
+                <h3>Format Preservation</h3>
+                <p>Maintain the original document structure, fonts, and formatting when converting from PDF to Word. Our intelligent conversion engine analyzes the document layout and recreates it accurately in the Word format.</p>
+                <ul class="feature-list">
+                    <li>Preserves fonts and styles</li>
+                    <li>Maintains paragraph structure</li>
+                    <li>Keeps original spacing</li>
+                    <li>Retains document hierarchy</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="feature-detail-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-images text-warning"></i>
+                </div>
+                <h3>Image Extraction & Embedding</h3>
+                <p>Automatically extract and embed images from your PDF files into the converted Word document. All charts, graphics, photos, and illustrations are preserved with their original quality and positioning.</p>
+                <ul class="feature-list">
+                    <li>Preserves image quality</li>
+                    <li>Maintains image positioning</li>
+                    <li>Supports all image formats</li>
+                    <li>Optimizes file size</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="feature-detail-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-bolt text-danger"></i>
+                </div>
+                <h3>Lightning-Fast Processing</h3>
+                <p>Our optimized conversion engine processes files at incredible speeds without compromising quality. Advanced algorithms and efficient processing pipelines ensure your documents are converted in seconds.</p>
+                <ul class="feature-list">
+                    <li>Average conversion time: 30 seconds</li>
+                    <li>Handles large files efficiently</li>
+                    <li>Real-time progress tracking</li>
+                    <li>Optimized for performance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Features -->
+    <div class="bg-light rounded p-5 mb-5">
+        <h2 class="text-center mb-4">Security & Privacy Features</h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="security-feature">
+                    <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                    <h5>Secure Processing</h5>
+                    <p>All files are processed in a secure environment with industry-standard encryption.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="security-feature">
+                    <i class="fas fa-trash-alt fa-3x text-success mb-3"></i>
+                    <h5>Auto-Delete</h5>
+                    <p>Files are automatically deleted from our servers after 1 hour for maximum privacy.</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="security-feature">
+                    <i class="fas fa-user-shield fa-3x text-warning mb-3"></i>
+                    <h5>No Registration</h5>
+                    <p>Convert files without creating an account or providing personal information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="text-center mb-4">Technical Specifications</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td><strong>Maximum File Size</strong></td>
+                            <td>20 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Supported Input Format</strong></td>
+                            <td>PDF</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Output Format</strong></td>
+                            <td>Microsoft Word (DOCX)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Processing Time</strong></td>
+                            <td>15-60 seconds (depending on file size and complexity)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>OCR Languages</strong></td>
+                            <td>English (primary), with support for multiple languages</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Retention</strong></td>
+                            <td>1 hour (automatic deletion)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conversion Accuracy</strong></td>
+                            <td>95%+ for standard documents</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center mt-5">
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-magic me-2"></i>Start Converting Now
+        </a>
+    </div>
+</div>
+{% endblock %}
