@@ -54,7 +54,7 @@ class PDFConverter:
                 page = pdf_document.load_page(page_num)
                 
                 # Try to extract text first
-                text = page.get_text()
+                text = page.get_text("text")
                 
                 if text.strip():
                     # Page has extractable text
@@ -70,9 +70,12 @@ class PDFConverter:
                 
                 # Image extraction simplified for stability
                 
-                # Add page break (except for last page)
-                if page_num < total_pages - 1:
-                    doc.add_page_break()
+                # Only add page break if there's substantial content and not the last page
+                # Avoid excessive page breaks that cause formatting issues
+                if page_num < total_pages - 1 and text.strip() and len(text.strip()) > 100:
+                    # Add a section break instead of page break for better flow
+                    paragraph = doc.add_paragraph()
+                    paragraph.add_run("\n" + "="*50 + f" Page {page_num + 2} " + "="*50 + "\n")
             
             if progress_callback:
                 progress_callback(90, "Saving Word document...")
@@ -98,28 +101,56 @@ class PDFConverter:
             return False
     
     def _add_text_to_document(self, doc, text, page_num):
-        """Add text content to Word document"""
+        """Add text content to Word document with proper formatting"""
         try:
-            # Split text into paragraphs
+            if not text or not text.strip():
+                return
+            
+            # Clean and normalize the text first
+            text = text.strip()
+            
+            # Split into logical paragraphs (double newlines or significant breaks)
+            # But be smarter about it to avoid too many small paragraphs
             paragraphs = text.split('\n\n')
             
-            for para_text in paragraphs:
-                para_text = para_text.strip()
-                if para_text:
-                    # Clean up the text
-                    para_text = para_text.replace('\n', ' ')
-                    para_text = ' '.join(para_text.split())  # Remove extra whitespace
+            # Merge very short paragraphs that are probably continuation
+            merged_paragraphs = []
+            current_para = ""
+            
+            for para in paragraphs:
+                para = para.strip()
+                if not para:
+                    continue
                     
-                    # Add paragraph to document
+                # Clean up line breaks within paragraph but preserve structure
+                para = para.replace('\n', ' ')
+                para = ' '.join(para.split())  # Remove extra whitespace
+                
+                # If paragraph is very short (< 50 chars), try to merge with previous
+                if len(para) < 50 and current_para and not para.endswith('.') and not para.endswith(':'):
+                    current_para += " " + para
+                else:
+                    # Save previous paragraph if exists
+                    if current_para:
+                        merged_paragraphs.append(current_para)
+                    current_para = para
+            
+            # Don't forget the last paragraph
+            if current_para:
+                merged_paragraphs.append(current_para)
+            
+            # Add paragraphs to document
+            for para_text in merged_paragraphs:
+                if len(para_text.strip()) > 3:  # Only add substantial content
                     paragraph = doc.add_paragraph(para_text)
                     
-                    # Basic formatting based on text characteristics
-                    if len(para_text) < 100 and para_text.isupper():
+                    # Apply basic formatting
+                    if len(para_text) < 80 and (para_text.isupper() or para_text.count(' ') < 5):
                         # Likely a heading
-                        paragraph.style = 'Heading 1'
-                    elif len(para_text) < 200 and para_text.strip().endswith(':'):
-                        # Likely a subheading
                         paragraph.style = 'Heading 2'
+                    elif para_text.strip().endswith(':') and len(para_text) < 150:
+                        # Likely a subheading  
+                        paragraph.style = 'Heading 3'
                         
         except Exception as e:
             logging.error(f"Error adding text to document: {e}")
