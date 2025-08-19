@@ -55,23 +55,46 @@ function initializeApp() {
             return;
         }
         uploadArea.dataset.initialized = 'true';
-        console.log('Initializing upload area...');
+        console.log('Initializing upload area...', 'fileInput:', fileInput, 'uploadArea:', uploadArea);
+        
+        // Make sure file input is properly configured
+        if (fileInput) {
+            fileInput.style.position = 'absolute';
+            fileInput.style.top = '0';
+            fileInput.style.left = '0';
+            fileInput.style.width = '100%';
+            fileInput.style.height = '100%';
+            fileInput.style.opacity = '0';
+            fileInput.style.cursor = 'pointer';
+            fileInput.style.zIndex = '20'; // Higher z-index
+            console.log('File input configured for clicking');
+        }
 
-        // File input change handler
+        // File input change handler - FIXED
         fileInput.addEventListener('change', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+            // Don't prevent default on file input change
+            console.log('File input changed, files:', e.target.files?.length);
             if (e.target.files && e.target.files.length > 0) {
                 handleFileSelection(e.target.files[0]);
             }
         });
 
-        // Upload area click handler
+        // Upload area click handler - FIXED
         uploadArea.addEventListener('click', function(e) {
-            e.preventDefault();
+            // Don't prevent default - let the click work naturally
             e.stopPropagation();
-            if (!isUploading) {
-                fileInput.click();
+            console.log('Upload area clicked, triggering file input');
+            if (!isUploading && fileInput) {
+                try {
+                    fileInput.click();
+                    console.log('File input click triggered');
+                } catch (error) {
+                    console.error('Error triggering file input:', error);
+                    // Fallback: try alternative methods
+                    fileInput.dispatchEvent(new MouseEvent('click'));
+                }
+            } else {
+                console.log('Upload blocked - isUploading:', isUploading, 'fileInput exists:', !!fileInput);
             }
         });
 
@@ -95,11 +118,12 @@ function initializeApp() {
             }
         });
 
-        // Remove file handler
+        // Remove file handler - FIXED
         if (removeFile) {
             removeFile.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                console.log('Remove file clicked');
                 clearFileSelection();
             });
         }
