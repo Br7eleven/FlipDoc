@@ -114,6 +114,13 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    z-index: 1;
 }
 
 .upload-area:hover {
@@ -147,6 +154,8 @@ body {
     width: 100%;
     height: 100%;
     opacity: 0;
+    cursor: pointer;
+    z-index: 2;
     cursor: pointer;
 }
 

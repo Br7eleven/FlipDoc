@@ -6,9 +6,15 @@
 // Global state
 let isUploading = false;
 
-// Wait for DOM to be fully loaded
+// Wait for DOM to be fully loaded with multiple fallbacks
 document.addEventListener('DOMContentLoaded', function() {
-    // Add small delay to ensure all elements are ready
+    // Add multiple delays to ensure all elements are ready
+    setTimeout(initializeApp, 100);
+    setTimeout(initializeApp, 500); // Backup initialization
+});
+
+// Also try when window loads
+window.addEventListener('load', function() {
     setTimeout(initializeApp, 100);
 });
 
@@ -23,17 +29,33 @@ function initializeApp() {
         const fileSize = document.getElementById('fileSize');
         const removeFile = document.getElementById('removeFile');
 
+        // Debug: List all elements with these IDs
+        console.log('Looking for upload elements...');
+        console.log('uploadArea:', uploadArea);
+        console.log('fileInput:', fileInput);
+        
         // Only initialize if elements exist
         if (!uploadArea || !fileInput) {
-            console.log('Upload elements not found on this page');
+            console.log('Upload elements not found on this page - will retry');
+            // Try again in case elements load later
+            setTimeout(() => {
+                const retryUploadArea = document.getElementById('uploadArea');
+                const retryFileInput = document.getElementById('fileInput');
+                if (retryUploadArea && retryFileInput) {
+                    console.log('Found elements on retry - reinitializing');
+                    initializeApp();
+                }
+            }, 1000);
             return;
         }
 
         // Only initialize once
         if (uploadArea.dataset.initialized) {
+            console.log('Upload area already initialized');
             return;
         }
         uploadArea.dataset.initialized = 'true';
+        console.log('Initializing upload area...');
 
         // File input change handler
         fileInput.addEventListener('change', function(e) {
