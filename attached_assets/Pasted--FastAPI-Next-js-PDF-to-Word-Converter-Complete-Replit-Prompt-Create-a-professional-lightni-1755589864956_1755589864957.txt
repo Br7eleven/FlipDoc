@@ -1,0 +1,281 @@
+# FastAPI + Next.js PDF to Word Converter - Complete Replit Prompt
+
+Create a professional, lightning-fast, SEO-optimized PDF to Word converter using a hybrid architecture for maximum performance and reliability.
+
+## 🏗️ TECH STACK
+
+### Frontend & SEO
+- **Next.js 14+ with App Router** - Server-side rendering framework for optimal SEO
+- **React** - Component-based UI library for interactive interfaces  
+- **Tailwind CSS** - Utility-first CSS framework for fast, responsive styling
+- **TypeScript** - Type safety and better development experience
+
+### Backend & Processing
+- **Python with FastAPI** - High-performance async API framework for file processing
+- **pdf-poppler or pdf2pic + Tesseract.js** - PDF parsing and OCR for scanned documents
+- **mammoth.js or docx library** - Word document generation and formatting
+- **Uvicorn** - Lightning-fast ASGI server for FastAPI
+
+### Additional Libraries
+- **python-multipart** - File upload handling
+- **PyMuPDF (fitz)** - Advanced PDF text extraction
+- **python-docx** - Word document creation
+- **Pillow** - Image processing for embedded images
+- **asyncio** - Async processing for multiple files
+
+## 🚀 ARCHITECTURE DESIGN
+
+### Project Structure
+```
+pdf-converter/
+├── frontend/ (Next.js)
+│   ├── app/
+│   ├── components/
+│   ├── lib/
+│   └── public/
+└── backend/ (FastAPI)
+    ├── main.py
+    ├── routers/
+    ├── services/
+    └── utils/
+```
+
+### API Communication
+- Frontend calls FastAPI backend via `/api/convert` endpoint
+- Real-time progress updates using WebSocket/Server-Sent Events
+- Async processing with job queues for large files
+
+## 🎯 CORE FEATURES
+
+### File Processing (FastAPI Backend)
+1. **Multi-format PDF support** - Text, image, and scanned PDFs
+2. **Async batch processing** - Handle multiple files simultaneously
+3. **OCR capability** - Extract text from image-based PDFs
+4. **Progress tracking** - Real-time conversion status
+5. **File validation** - Format, size, and content verification
+6. **Memory optimization** - Stream processing for large files
+
+### Frontend Features (Next.js)
+1. **Drag & drop interface** - Intuitive file upload
+2. **Real-time progress** - Live conversion status updates  
+3. **Responsive design** - Mobile-first approach
+4. **File preview** - PDF preview before conversion
+5. **Download management** - Secure file retrieval
+6. **Error handling** - User-friendly error messages
+
+### Performance Optimizations
+1. **Concurrent processing** - Multiple PDFs processed simultaneously
+2. **Caching strategy** - Reduce redundant processing
+3. **File streaming** - Handle large files without memory issues
+4. **Background jobs** - Non-blocking conversion process
+5. **CDN integration** - Fast static asset delivery
+
+## 🔧 FASTAPI BACKEND SPECIFICATIONS
+
+### Main API Endpoints
+```python
+POST /api/convert - Convert PDF to Word
+GET /api/status/{job_id} - Check conversion status  
+GET /api/download/{file_id} - Download converted file
+GET /api/health - Health check endpoint
+DELETE /api/cleanup/{job_id} - Clean temporary files
+```
+
+### Core Features Implementation
+1. **File upload with validation** (max 20MB, PDF only)
+2. **Async job processing** with unique job IDs
+3. **Progress tracking** with status updates
+4. **Temporary file management** with auto-cleanup
+5. **Error handling** with detailed error codes
+6. **Rate limiting** to prevent abuse
+
+### PDF Processing Pipeline
+```python
+1. File validation and virus scanning
+2. PDF text extraction with PyMuPDF
+3. Image extraction and optimization  
+4. OCR processing for scanned content
+5. Word document generation with formatting
+6. File compression and download preparation
+```
+
+## 🚀 NEXT.JS FRONTEND SPECIFICATIONS
+
+### SEO Optimization (Critical)
+1. **Server-side rendering** for all pages
+2. **Dynamic meta tags** with conversion-focused keywords
+3. **Structured data** (SoftwareApplication schema)
+4. **Core Web Vitals** optimization (<2.5s LCP)
+5. **Mobile-first responsive** design
+6. **Sitemap generation** with proper priorities
+7. **Open Graph tags** for social sharing
+
+### Required Pages with SEO Focus
+1. **Homepage** (`/`) - "Fast PDF to Word Converter Online"
+2. **Features** (`/features`) - "Advanced PDF Conversion Features" 
+3. **How-to Guide** (`/how-to-convert-pdf-to-word`) - Step-by-step tutorial
+4. **API Documentation** (`/api-docs`) - For developers
+5. **FAQ** (`/faq`) - Common conversion questions
+6. **Privacy Policy** (`/privacy`) - Data protection information
+7. **About** (`/about`) - Tool benefits and technology
+
+### UI Components
+1. **Hero section** - Clear value proposition and CTA
+2. **File uploader** - Drag/drop with progress indicators
+3. **Conversion dashboard** - Real-time status and queue
+4. **Feature showcase** - Tool capabilities with icons
+5. **FAQ accordion** - Expandable question sections
+6. **Footer** - Sitemap links and legal pages
+
+## 📊 SEO CONTENT STRATEGY
+
+### Target Keywords (Natural Integration)
+- Primary: "PDF to Word converter online"
+- Secondary: "convert PDF to Word fast", "PDF to DOCX converter"
+- Long-tail: "how to convert PDF to Word document free"
+- Technical: "OCR PDF to Word", "batch PDF converter"
+
+### Content Requirements
+1. **H1 tags** with primary keywords on each page  
+2. **Meta descriptions** under 155 characters
+3. **Alt text** for all images and icons
+4. **Internal linking** between related pages
+5. **FAQ schema markup** for rich snippets
+6. **Breadcrumb navigation** for better UX
+
+## 🛡️ SECURITY & PERFORMANCE
+
+### Security Measures
+1. **File type validation** - Strict PDF-only uploads
+2. **Virus scanning** - Basic malware detection
+3. **Rate limiting** - API abuse prevention
+4. **Temporary file cleanup** - Auto-delete after 1 hour
+5. **CORS configuration** - Secure cross-origin requests
+6. **Input sanitization** - Prevent injection attacks
+
+### Performance Optimizations
+1. **Async processing** - Non-blocking operations
+2. **File streaming** - Memory-efficient large file handling
+3. **Response compression** - Gzip/Brotli compression
+4. **Image optimization** - WebP format with fallbacks
+5. **Bundle splitting** - Code splitting for faster loads
+6. **Service worker** - Offline functionality (optional)
+
+## 🔗 INTEGRATION REQUIREMENTS
+
+### Frontend-Backend Communication
+```typescript
+// API client configuration
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
+const uploadFile = async (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return fetch(`${API_BASE_URL}/api/convert`, {
+    method: 'POST',
+    body: formData
+  })
+}
+```
+
+### Real-time Updates
+1. **WebSocket connection** for live progress updates
+2. **Server-sent events** for conversion status
+3. **Polling fallback** for unsupported browsers
+4. **Loading states** with progress bars
+5. **Error boundaries** for graceful failures
+
+## 📱 RESPONSIVE DESIGN REQUIREMENTS
+
+### Mobile Optimization
+1. **Touch-friendly interface** - Large buttons and targets
+2. **Swipe gestures** - File management actions
+3. **Progressive disclosure** - Hide advanced options
+4. **Offline indicators** - Connection status display
+5. **App-like experience** - PWA capabilities
+
+### Desktop Enhancement  
+1. **Keyboard shortcuts** - Power user features
+2. **Multi-file selection** - Bulk operations
+3. **Advanced settings** - Conversion options
+4. **File explorer integration** - System file dialogs
+
+## 🚀 DEPLOYMENT CONFIGURATION
+
+### FastAPI Backend Deployment
+```python
+# Dockerfile for FastAPI
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+### Next.js Frontend Deployment
+```javascript
+// next.config.js
+module.exports = {
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.API_URL
+  },
+  images: {
+    domains: ['api.yourapp.com']
+  }
+}
+```
+
+### Environment Variables
+```bash
+# Frontend (.env.local)
+NEXT_PUBLIC_API_URL=https://api.yourapp.com
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+
+# Backend (.env)
+UPLOAD_DIR=/tmp/uploads
+MAX_FILE_SIZE=20971520
+REDIS_URL=redis://localhost:6379
+```
+
+## 📈 ANALYTICS & MONITORING
+
+### Tracking Implementation
+1. **Google Analytics 4** - User behavior tracking
+2. **Conversion events** - File upload/download tracking
+3. **Performance monitoring** - Core Web Vitals
+4. **Error tracking** - Sentry integration
+5. **API metrics** - Response times and success rates
+
+### Success Metrics
+1. **Conversion rate** - Upload to download ratio
+2. **Processing speed** - Average conversion time
+3. **User engagement** - Session duration and pages/session
+4. **SEO performance** - Search rankings and organic traffic
+5. **Error rates** - Failed conversions and causes
+
+## 🎯 SUCCESS CRITERIA
+
+The final application must:
+- ✅ Process PDF files in under 30 seconds (average)
+- ✅ Score 95+ on Google PageSpeed Insights
+- ✅ Handle files up to 20MB efficiently
+- ✅ Support concurrent users without degradation
+- ✅ Maintain 99.5% uptime reliability
+- ✅ Rank in top 10 for target keywords within 3 months
+- ✅ Convert complex PDFs with 95%+ accuracy
+- ✅ Provide real-time progress feedback
+
+## 📝 DEVELOPMENT PRIORITY
+
+1. **FastAPI backend setup** - Core PDF processing engine
+2. **Next.js frontend** - SEO-optimized user interface
+3. **API integration** - Seamless communication layer
+4. **SEO implementation** - Meta tags and structured data
+5. **Performance optimization** - Speed and reliability
+6. **Testing and deployment** - Production readiness
+
+---
+
+**Note**: This hybrid architecture provides the best of both worlds - Python's superior PDF processing capabilities with Next.js's excellent SEO and user experience. The FastAPI backend ensures lightning-fast, reliable conversions while Next.js delivers optimal search engine visibility and user engagement.
+
+Generate the complete, production-ready codebase with both frontend and backend components, including deployment configurations, comprehensive error handling, and detailed documentation.
