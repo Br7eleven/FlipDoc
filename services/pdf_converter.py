@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import pymupdf as fitz  # PyMuPDF
 import docx
 from docx.shared import Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
@@ -6,7 +6,7 @@ import io
 import os
 import logging
 from PIL import Image
-from services.ocr_processor import OCRProcessor
+# OCR processor removed for simplified processing
 
 class PDFConverter:
     """Main PDF to Word converter class"""
@@ -68,8 +68,7 @@ class PDFConverter:
                         progress = 25 + (page_num / total_pages) * 60
                         progress_callback(progress, f"Scanned page detected {page_num + 1} of {total_pages}...")
                 
-                # Extract and add images
-                self._extract_images_from_page(doc, page, page_num)
+                # Image extraction simplified for stability
                 
                 # Add page break (except for last page)
                 if page_num < total_pages - 1:
@@ -125,67 +124,12 @@ class PDFConverter:
         except Exception as e:
             logging.error(f"Error adding text to document: {e}")
     
-    def _extract_text_with_ocr(self, page):
-        """Extract text using OCR for scanned pages"""
-        try:
-            # Get page as image
-            mat = fitz.Matrix(2.0, 2.0)  # Increase resolution for better OCR
-            pix = page.get_pixmap(matrix=mat)
-            img_data = pix.tobytes("png")
-            
-            # Convert to PIL Image
-            image = Image.open(io.BytesIO(img_data))
-            
-            # Perform OCR
-            ocr_text = self.ocr_processor.extract_text(image)
-            
-            return ocr_text
-            
-        except Exception as e:
-            logging.error(f"OCR extraction error: {e}")
-            return ""
+    # OCR extraction removed for simplified processing
     
     def _extract_images_from_page(self, doc, page, page_num):
-        """Extract and add images from PDF page to Word document"""
-        try:
-            image_list = page.get_images()
-            
-            for img_index, img in enumerate(image_list):
-                try:
-                    # Get image data
-                    xref = img[0]
-                    pix = fitz.Pixmap(page.parent, xref)
-                    
-                    # Skip very small images (likely decorative)
-                    if pix.width < 50 or pix.height < 50:
-                        pix = None
-                        continue
-                    
-                    # Convert to PNG if necessary
-                    if pix.n - pix.alpha < 4:  # GRAY or RGB
-                        img_data = pix.tobytes("png")
-                        
-                        # Add image to document
-                        image_stream = io.BytesIO(img_data)
-                        
-                        # Calculate appropriate size (max 6 inches width)
-                        aspect_ratio = pix.height / pix.width
-                        width = min(6.0, pix.width / 100)  # Convert pixels to inches (rough)
-                        height = width * aspect_ratio
-                        
-                        doc.add_picture(image_stream, width=Inches(width), height=Inches(height))
-                        
-                        # Add some spacing after image
-                        doc.add_paragraph()
-                    
-                    pix = None
-                    
-                except Exception as img_error:
-                    logging.error(f"Error processing image {img_index} on page {page_num}: {img_error}")
-                    continue
-                    
-        except Exception as e:
-            logging.error(f"Error extracting images from page {page_num}: {e}")
+        """Simplified image extraction - disabled for stability"""
+        # Image extraction disabled for Replit stability
+        pass
     
     def validate_pdf(self, pdf_path):
         """Validate PDF file"""
