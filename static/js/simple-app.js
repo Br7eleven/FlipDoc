@@ -37,6 +37,8 @@ function initializeApp() {
 
         // File input change handler
         fileInput.addEventListener('change', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             if (e.target.files && e.target.files.length > 0) {
                 handleFileSelection(e.target.files[0]);
             }
@@ -44,6 +46,8 @@ function initializeApp() {
 
         // Upload area click handler
         uploadArea.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             if (!isUploading) {
                 fileInput.click();
             }
@@ -71,7 +75,9 @@ function initializeApp() {
 
         // Remove file handler
         if (removeFile) {
-            removeFile.addEventListener('click', function() {
+            removeFile.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 clearFileSelection();
             });
         }
@@ -79,6 +85,8 @@ function initializeApp() {
         // Form submit handler
         if (uploadForm) {
             uploadForm.addEventListener('submit', function(e) {
+                console.log('Form submit triggered');
+                
                 if (isUploading) {
                     e.preventDefault();
                     showMessage('Upload already in progress...', 'warning');
@@ -92,15 +100,19 @@ function initializeApp() {
                     return;
                 }
 
-                // Validate file
+                // Validate file one more time
                 if (!validateFile(file)) {
                     e.preventDefault();
                     return;
                 }
 
-                // Start upload
+                console.log('Starting upload for file:', file.name);
+                
+                // Start upload process
                 isUploading = true;
                 showUploadProgress();
+                
+                // Let the form submit naturally - don't prevent default here
             });
         }
 
@@ -111,27 +123,44 @@ function initializeApp() {
 }
 
 function handleFileSelection(file) {
+    console.log('Handling file selection:', file.name);
+    
     if (!validateFile(file)) {
         return;
     }
 
-    const fileName = document.getElementById('fileName');
-    const fileSize = document.getElementById('fileSize');
-    const uploadArea = document.getElementById('uploadArea');
-    const selectedFile = document.getElementById('selectedFile');
+    try {
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const uploadArea = document.getElementById('uploadArea');
+        const selectedFile = document.getElementById('selectedFile');
 
-    if (fileName) fileName.textContent = file.name;
-    if (fileSize) fileSize.textContent = formatFileSize(file.size);
-    
-    if (uploadArea) uploadArea.style.display = 'none';
-    if (selectedFile) selectedFile.style.display = 'block';
+        if (fileName) fileName.textContent = file.name;
+        if (fileSize) fileSize.textContent = formatFileSize(file.size);
+        
+        // Smoothly transition the UI
+        if (uploadArea && selectedFile) {
+            uploadArea.style.display = 'none';
+            selectedFile.style.display = 'block';
+        }
 
-    // Update file input
-    const fileInput = document.getElementById('fileInput');
-    if (fileInput) {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        fileInput.files = dt.files;
+        // Update file input safely
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput) {
+            try {
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+            } catch (error) {
+                console.warn('Could not update file input:', error);
+                // Fallback: the file is still selected in the original input
+            }
+        }
+        
+        console.log('File selection completed successfully');
+    } catch (error) {
+        console.error('Error in handleFileSelection:', error);
+        showMessage('Error selecting file. Please try again.', 'error');
     }
 }
 
@@ -158,13 +187,19 @@ function validateFile(file) {
 }
 
 function clearFileSelection() {
-    const fileInput = document.getElementById('fileInput');
-    const uploadArea = document.getElementById('uploadArea');
-    const selectedFile = document.getElementById('selectedFile');
+    try {
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const selectedFile = document.getElementById('selectedFile');
 
-    if (fileInput) fileInput.value = '';
-    if (uploadArea) uploadArea.style.display = 'block';
-    if (selectedFile) selectedFile.style.display = 'none';
+        if (fileInput) fileInput.value = '';
+        if (uploadArea) uploadArea.style.display = 'block';
+        if (selectedFile) selectedFile.style.display = 'none';
+        
+        console.log('File selection cleared');
+    } catch (error) {
+        console.error('Error clearing file selection:', error);
+    }
 }
 
 function showUploadProgress() {
