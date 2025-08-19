@@ -8,19 +8,29 @@ let uploadInProgress = false;
 let statusCheckInterval = null;
 let currentJobId = null;
 
-// Initialize application when DOM is loaded
+// Initialize application when DOM is loaded (with debounce)
+let initTimeout;
 document.addEventListener('DOMContentLoaded', function() {
-    initializeFileUpload();
-    initializeFormValidation();
-    initializeTooltips();
-    initializeProgressTracking();
-    initializeMobileOptimizations();
-    
-    // Show success message if redirected after upload
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('uploaded') === 'true') {
-        showNotification('File uploaded successfully! Conversion in progress...', 'success');
-    }
+    clearTimeout(initTimeout);
+    initTimeout = setTimeout(() => {
+        try {
+            initializeFileUpload();
+            initializeFormValidation();
+            initializeTooltips();
+            initializeProgressTracking();
+            initializeMobileOptimizations();
+            initializeKeyboardShortcuts();
+            initializeAccessibility();
+            
+            // Show success message if redirected after upload
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('uploaded') === 'true') {
+                showNotification('File uploaded successfully! Conversion in progress...', 'success');
+            }
+        } catch (error) {
+            console.error('Initialization error:', error);
+        }
+    }, 500); // 500ms debounce
 });
 
 /**
@@ -35,7 +45,9 @@ function initializeFileUpload() {
     const fileSize = document.getElementById('fileSize');
     const removeFile = document.getElementById('removeFile');
 
-    if (!uploadArea || !fileInput) return;
+    // Only initialize if elements exist and haven't been initialized
+    if (!uploadArea || !fileInput || uploadArea.dataset.initialized) return;
+    uploadArea.dataset.initialized = 'true';
 
     // Prevent default drag behaviors
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -154,12 +166,12 @@ function validateFile(file) {
         };
     }
 
-    // Check file size (20MB limit)
-    const maxSize = 20 * 1024 * 1024; // 20MB in bytes
+    // Check file size (5MB limit for Replit)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
     if (file.size > maxSize) {
         return {
             valid: false,
-            message: `File size (${formatFileSize(file.size)}) exceeds the 20MB limit. Please choose a smaller file.`
+            message: `File size (${formatFileSize(file.size)}) exceeds the 5MB limit. Please choose a smaller file.`
         };
     }
 
@@ -588,26 +600,9 @@ function initializeKeyboardShortcuts() {
     });
 }
 
-// Initialize keyboard shortcuts
-document.addEventListener('DOMContentLoaded', initializeKeyboardShortcuts);
+// Keyboard shortcuts handled in main DOMContentLoaded
 
-/**
- * Performance monitoring
- */
-function initializePerformanceMonitoring() {
-    // Monitor page load performance
-    window.addEventListener('load', () => {
-        if ('performance' in window) {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            if (perfData) {
-                console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
-            }
-        }
-    });
-}
-
-// Initialize performance monitoring
-initializePerformanceMonitoring();
+// Performance monitoring removed to prevent console spam
 
 /**
  * Accessibility enhancements
@@ -615,7 +610,8 @@ initializePerformanceMonitoring();
 function initializeAccessibility() {
     // Add keyboard navigation for upload area
     const uploadArea = document.getElementById('uploadArea');
-    if (uploadArea) {
+    if (uploadArea && !uploadArea.dataset.accessibilityInit) {
+        uploadArea.dataset.accessibilityInit = 'true';
         uploadArea.setAttribute('tabindex', '0');
         uploadArea.setAttribute('role', 'button');
         uploadArea.setAttribute('aria-label', 'Click or drag and drop to upload PDF file');
@@ -631,24 +627,26 @@ function initializeAccessibility() {
         });
     }
 
-    // Add screen reader announcements for dynamic content
-    const announcer = document.createElement('div');
-    announcer.setAttribute('aria-live', 'polite');
-    announcer.setAttribute('aria-atomic', 'true');
-    announcer.className = 'sr-only';
-    document.body.appendChild(announcer);
+    // Add screen reader announcements for dynamic content (only once)
+    if (!document.getElementById('screen-reader-announcer')) {
+        const announcer = document.createElement('div');
+        announcer.id = 'screen-reader-announcer';
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.className = 'sr-only';
+        document.body.appendChild(announcer);
 
-    // Function to announce messages to screen readers
-    window.announceToScreenReader = function(message) {
-        announcer.textContent = message;
-        setTimeout(() => {
-            announcer.textContent = '';
-        }, 1000);
-    };
+        // Function to announce messages to screen readers
+        window.announceToScreenReader = function(message) {
+            announcer.textContent = message;
+            setTimeout(() => {
+                announcer.textContent = '';
+            }, 1000);
+        };
+    }
 }
 
-// Initialize accessibility features
-document.addEventListener('DOMContentLoaded', initializeAccessibility);
+// Accessibility handled in main DOMContentLoaded
 
 /**
  * Error boundary for JavaScript errors

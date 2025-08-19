@@ -12,7 +12,8 @@ class PDFConverter:
     """Main PDF to Word converter class"""
     
     def __init__(self):
-        self.ocr_processor = OCRProcessor()
+        # OCR processor removed for simplified processing
+        pass
     
     def convert_pdf_to_word(self, pdf_path, output_path, progress_callback=None):
         """
@@ -59,14 +60,13 @@ class PDFConverter:
                     # Page has extractable text
                     self._add_text_to_document(doc, text, page_num)
                 else:
-                    # Page might be scanned, use OCR
+                    # Page appears to be scanned - show warning
+                    warning_text = f"[Scanned PDF detected - Page {page_num + 1}: Text extraction limited. For better results, use text-based PDFs.]\n\n"
+                    self._add_text_to_document(doc, warning_text, page_num)
+                    
                     if progress_callback:
                         progress = 25 + (page_num / total_pages) * 60
-                        progress_callback(progress, f"Performing OCR on page {page_num + 1}...")
-                    
-                    ocr_text = self._extract_text_with_ocr(page)
-                    if ocr_text:
-                        self._add_text_to_document(doc, ocr_text, page_num)
+                        progress_callback(progress, f"Scanned page detected {page_num + 1} of {total_pages}...")
                 
                 # Extract and add images
                 self._extract_images_from_page(doc, page, page_num)
