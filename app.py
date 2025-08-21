@@ -6,7 +6,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 import uuid
 import threading
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from services.pdf_converter import PDFConverter
 from utils.file_handler import FileHandler
 
@@ -16,6 +16,10 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-production")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+@app.route("/")
+def home():
+    return "App is working fine on Railway"
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
@@ -36,9 +40,11 @@ conversion_jobs = {}
 file_handler = FileHandler(UPLOAD_FOLDER, CONVERTED_FOLDER)
 
 def allowed_file(filename):
+    """Check if file extension is allowed"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def cleanup_old_files():
+    """Background task to cleanup old files"""
     while True:
         try:
             file_handler.cleanup_old_files()
@@ -52,48 +58,49 @@ cleanup_thread.start()
 
 @app.route('/')
 def index():
+    """Homepage with converter interface"""
     return render_template('index.html', 
-        title="Fast PDF to Word Converter Online - Convert PDF to DOCX",
-        description="Convert PDF files to Word documents quickly and securely. Supports text and scanned PDFs with OCR technology. Free online converter."
-    )
+                         title="Fast PDF to Word Converter Online - Convert PDF to DOCX",
+                         description="Convert PDF files to Word documents quickly and securely. Supports text and scanned PDFs with OCR technology. Free online converter.")
 
 @app.route('/features')
 def features():
+    """Features page"""
     return render_template('features.html',
-        title="Advanced PDF Conversion Features - PDF to Word Converter",
-        description="Discover powerful features of our PDF to Word converter including OCR support, batch processing, and format preservation."
-    )
+                         title="Advanced PDF Conversion Features - PDF to Word Converter",
+                         description="Discover powerful features of our PDF to Word converter including OCR support, batch processing, and format preservation.")
 
 @app.route('/how-to-convert-pdf-to-word')
 def how_to():
+    """How-to guide page"""
     return render_template('how_to.html',
-        title="How to Convert PDF to Word Document - Step by Step Guide",
-        description="Learn how to convert PDF files to Word documents easily. Complete tutorial with tips for best results."
-    )
+                         title="How to Convert PDF to Word Document - Step by Step Guide",
+                         description="Learn how to convert PDF files to Word documents easily. Complete tutorial with tips for best results.")
 
 @app.route('/faq')
 def faq():
+    """FAQ page"""
     return render_template('faq.html',
-        title="Frequently Asked Questions - PDF to Word Converter",
-        description="Find answers to common questions about PDF to Word conversion, file formats, and troubleshooting."
-    )
+                         title="Frequently Asked Questions - PDF to Word Converter",
+                         description="Find answers to common questions about PDF to Word conversion, file formats, and troubleshooting.")
 
 @app.route('/privacy')
 def privacy():
+    """Privacy policy page"""
     return render_template('privacy.html',
-        title="Privacy Policy - PDF to Word Converter",
-        description="Learn how we protect your data and privacy when using our PDF to Word conversion service."
-    )
+                         title="Privacy Policy - PDF to Word Converter",
+                         description="Learn how we protect your data and privacy when using our PDF to Word conversion service.")
 
 @app.route('/about')
 def about():
+    """About page"""
     return render_template('about.html',
-        title="About Our PDF to Word Converter Technology",
-        description="Learn about the advanced technology behind our PDF to Word converter and why it's the best choice for your conversion needs."
-    )
+                         title="About Our PDF to Word Converter Technology",
+                         description="Learn about the advanced technology behind our PDF to Word converter and why it's the best choice for your conversion needs.")
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    """Handle file upload and start conversion"""
     if 'file' not in request.files:
         flash('No file selected', 'error')
         return redirect(url_for('index'))
@@ -108,13 +115,17 @@ def upload_file():
         return redirect(url_for('index'))
     
     try:
+        # Generate unique job ID
         job_id = str(uuid.uuid4())
+        
+        # Save uploaded file
         filename = secure_filename(file.filename or "uploaded_file.pdf")
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
         unique_filename = f"{timestamp}{job_id}_{filename}"
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
         file.save(filepath)
         
+        # Initialize job tracking
         conversion_jobs[job_id] = {
             'status': 'uploaded',
             'progress': 0,
@@ -126,6 +137,7 @@ def upload_file():
             'error': None
         }
         
+        # Start conversion in background thread
         thread = threading.Thread(target=convert_pdf_async, args=(job_id, filepath, filename))
         thread.daemon = True
         thread.start()
@@ -139,16 +151,22 @@ def upload_file():
         return redirect(url_for('index'))
 
 def convert_pdf_async(job_id, filepath, original_filename):
+    """Async PDF conversion function"""
     try:
+        # Update status
         conversion_jobs[job_id]['status'] = 'processing'
         conversion_jobs[job_id]['progress'] = 10
         conversion_jobs[job_id]['message'] = 'Analyzing PDF structure...'
         
+        # Initialize converter
         converter = PDFConverter()
+        
+        # Convert PDF to Word
         base_name = os.path.splitext(original_filename)[0]
         output_filename = f"{base_name}.docx"
         output_path = os.path.join(app.config['CONVERTED_FOLDER'], f"{job_id}_{output_filename}")
         
+        # Perform conversion with progress updates
         def progress_callback(progress, message):
             conversion_jobs[job_id]['progress'] = progress
             conversion_jobs[job_id]['message'] = message
@@ -171,20 +189,21 @@ def convert_pdf_async(job_id, filepath, original_filename):
 
 @app.route('/status/<job_id>')
 def conversion_status(job_id):
+    """Show conversion status page"""
     if job_id not in conversion_jobs:
         flash('Invalid job ID', 'error')
         return redirect(url_for('index'))
     
     job = conversion_jobs[job_id]
     return render_template('index.html', 
-        job=job, 
-        job_id=job_id,
-        title="PDF Conversion Status",
-        description="Track your PDF to Word conversion progress in real-time."
-    )
+                         job=job, 
+                         job_id=job_id,
+                         title="PDF Conversion Status",
+                         description="Track your PDF to Word conversion progress in real-time.")
 
 @app.route('/api/status/<job_id>')
 def api_status(job_id):
+    """API endpoint for status updates"""
     if job_id not in conversion_jobs:
         return jsonify({'error': 'Invalid job ID'}), 404
     
@@ -199,6 +218,7 @@ def api_status(job_id):
 
 @app.route('/download/<job_id>')
 def download_file(job_id):
+    """Download converted file"""
     if job_id not in conversion_jobs:
         flash('Invalid job ID', 'error')
         return redirect(url_for('index'))
@@ -211,10 +231,9 @@ def download_file(job_id):
     try:
         original_name = os.path.splitext(job['original_filename'])[0] + '.docx'
         return send_file(job['converted_file'], 
-            as_attachment=True, 
-            download_name=original_name,
-            mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        )
+                        as_attachment=True, 
+                        download_name=original_name,
+                        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     except Exception as e:
         logging.error(f"Download error: {e}")
         flash('Error downloading file', 'error')
@@ -222,18 +241,22 @@ def download_file(job_id):
 
 @app.errorhandler(413)
 def too_large(e):
+    """Handle file too large error"""
     flash('File too large. Maximum size is 20MB.', 'error')
     return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def not_found(e):
+    """Handle 404 errors"""
     return render_template('index.html', 
-        title="Page Not Found - PDF to Word Converter",
-        description="The requested page was not found. Return to our PDF to Word converter."
-    ), 404
+                         title="Page Not Found - PDF to Word Converter",
+                         description="The requested page was not found. Return to our PDF to Word converter."), 404
 
 @app.errorhandler(500)
 def internal_error(e):
+    """Handle 500 errors"""
     logging.error(f"Internal server error: {e}")
     flash('An internal error occurred. Please try again.', 'error')
     return redirect(url_for('index'))
+
+
