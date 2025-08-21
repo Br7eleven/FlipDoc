@@ -4,10 +4,9 @@ import numpy as np
 import logging
 import os
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 class OCRProcessor:
     """OCR processor for scanned PDF pages"""
-
+    
     def __init__(self):
         # Configure tesseract path if needed (for different OS)
         self._configure_tesseract()
