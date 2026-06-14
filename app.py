@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, render_template, request, send_file, jsonify, redirect, url_for, flash
+from flask import Flask, render_template, request, send_file, send_from_directory, jsonify, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 from werkzeug.middleware.proxy_fix import ProxyFix
 import uuid
@@ -93,6 +93,27 @@ def privacy():
     return render_template('privacy.html',
                          title="Privacy Policy - FlipDoc",
                          description="Learn how FlipDoc protects your data and privacy. Files encrypted, auto-deleted after 1 hour. No registration required. Your documents stay private.")
+
+# Static asset fallback routes for Vercel (serves public/ files when CDN doesn't intercept)
+@app.route('/image/<path:filename>')
+def serve_image(filename):
+    return send_from_directory('public/image', filename)
+
+@app.route('/css/<path:filename>')
+def serve_css(filename):
+    return send_from_directory('public/css', filename)
+
+@app.route('/js/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('public/js', filename)
+
+@app.route('/favicon.ico')
+def serve_favicon_ico():
+    return send_from_directory('public/image/favicon', 'favicon.ico')
+
+@app.route('/favicon.png')
+def serve_favicon_png():
+    return send_from_directory('public/image/favicon', 'favicon-96x96.png')
 
 @app.route('/about')
 def about():
