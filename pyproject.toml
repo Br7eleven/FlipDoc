@@ -1,7 +1,7 @@
 [project]
 name = "flipdoc-pdf-converter"
 version = "2.0.0"
-description = "Professional PDF to Word converter with PaddleOCR-powered OCR, table detection, and layout preservation"
+description = "Professional PDF to Word converter with OCR, table detection, and layout preservation"
 requires-python = ">=3.11"
 dependencies = [
     # Core Web Framework
@@ -14,13 +14,12 @@ dependencies = [
     "pypdf2>=3.0.1",
     "pdf2image>=1.17.0",
 
-    # OCR Engine (PaddleOCR primary, Tesseract fallback)
-    "paddleocr>=2.7.0",
+    # OCR Engine (Tesseract)
     "pytesseract>=0.3.13",
 
     # Image Processing
     "pillow>=11.3.0",
-    "opencv-python>=4.12.0.88",
+    "opencv-python-headless>=4.12.0.88",
     "scipy>=1.13.0",
     "numpy>=2.2.6",
 

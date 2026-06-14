@@ -8,14 +8,12 @@ PyMuPDF==1.26.3
 PyPDF2==3.0.1
 pdf2image==1.17.0
 
-# OCR Engine
-paddlepaddle
-paddleocr>=2.7.0
+# OCR Engine (Tesseract)
 pytesseract==0.3.13
 
 # Image Processing
 Pillow==11.3.0
-opencv-python==4.12.0.88
+opencv-python-headless==4.12.0.88
 scipy>=1.13.0
 numpy==2.2.6
 
