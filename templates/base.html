@@ -9,7 +9,7 @@
     <meta name="author" content="FlipDoc by BR7 Technologies">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <link rel="canonical" href="{{ request.url }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% block og_title %}{{ title }}{% endblock %}">
@@ -17,13 +17,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ request.url }}">
     <meta property="og:site_name" content="FlipDoc - PDF to Word Converter">
-    <meta property="og:image" content="{{ url_for('static', filename='image/preview.png', _external=True) }}">
+    <meta property="og:image" content="/image/preview.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block twitter_title %}{{ title }}{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}{{ description }}{% endblock %}">
-    <meta name="twitter:image" content="{{ url_for('static', filename='image/preview.png', _external=True) }}">
+    <meta name="twitter:image" content="/image/preview.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/lush.css') }}?v=2" rel="stylesheet">
+    <link href="/css/lush.css?v=2" rel="stylesheet">
 
     <!-- Inline overrides: force light backgrounds + dark text everywhere, ignore OS dark mode -->
     <style>
@@ -147,7 +147,7 @@
             "name": "BR7 Technologies",
             "logo": {
                 "@type": "ImageObject",
-                "url": "{{ url_for('static', filename='image/logo.png', _external=True) }}"
+                "url": "/image/logo.png"
             }
         }
     }
@@ -242,8 +242,8 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/simple-app.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="/js/simple-app.js"></script>
+    <script src="/js/animations.js"></script>
     <script>
         // Dynamic copyright year
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
