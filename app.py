@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.middleware.proxy_fix import ProxyFix
 import uuid
 import threading
+from pathlib import Path
 import time
 from datetime import datetime, timedelta
 from services.pdf_converter import PDFConverter
@@ -114,6 +115,29 @@ def serve_favicon_ico():
 @app.route('/favicon.png')
 def serve_favicon_png():
     return send_from_directory('public/image/favicon', 'favicon-96x96.png')
+
+@app.route("/__debug_assets")
+def debug_assets():
+    base_dir = Path(__file__).resolve().parent
+    cwd = Path.cwd()
+
+    paths = [
+        cwd / "public" / "image" / "flipdoc.svg",
+        base_dir / "public" / "image" / "flipdoc.svg",
+        base_dir.parent / "public" / "image" / "flipdoc.svg",
+    ]
+
+    return jsonify({
+        "cwd": str(cwd),
+        "__file__": str(Path(__file__).resolve()),
+        "base_dir": str(base_dir),
+        "exists_checks": [
+            {"path": str(p), "exists": p.exists()} for p in paths
+        ],
+        "cwd_files": [str(x) for x in cwd.rglob("*") if "public" in str(x)][:100],
+        "base_files": [str(x) for x in base_dir.rglob("*") if "public" in str(x)][:100],
+        "parent_files": [str(x) for x in base_dir.parent.rglob("*") if "public" in str(x)][:100],
+    })
 
 @app.route('/about')
 def about():
