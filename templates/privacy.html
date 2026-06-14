@@ -8,7 +8,10 @@
     <meta name="keywords" content="FlipDoc privacy policy, PDF converter privacy, data security, file deletion">
     <meta name="author" content="FlipDoc by BR7 Technologies">
     <meta name="robots" content="index, follow">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='image/favicon/favicon.svg') }}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='image/favicon/favicon-96x96.png') }}">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='image/favicon/apple-touch-icon.png') }}">
+<link rel="manifest" href="{{ url_for('static', filename='image/favicon/site.webmanifest') }}">
 
     <meta property="og:title" content="Privacy Policy - FlipDoc">
     <meta property="og:description" content="Learn how FlipDoc protects your data. Files encrypted, auto-deleted after 60 minutes. No registration required.">
@@ -52,7 +55,7 @@
         nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; }
         .nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
         .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); letter-spacing: -0.02em; }
-        .nav-logo::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); }
+        .nav-logo img { display: block; flex-shrink: 0; }
         .nav-links { display: flex; align-items: center; gap: 32px; }
         .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); transition: color 150ms ease; }
         .nav-links a:hover, .nav-links a.active { color: var(--accent); }
@@ -202,7 +205,10 @@
 <!-- NAV -->
 <nav>
     <div class="nav-inner">
-        <a href="/" class="nav-logo">FlipDoc</a>
+        <a href="/" class="nav-logo">
+            <img src="{{ url_for('static', filename='image/flipdoc.svg') }}" alt="" width="40" height="40">
+            FlipDoc
+        </a>
         <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" id="navToggle">&#9776;</button>
         <div class="nav-links" id="navLinks">
             <a href="/">Home</a>
@@ -245,7 +251,7 @@
 <footer role="contentinfo">
     <div class="footer-grid">
         <div class="footer-brand">
-            <h5>FlipDoc</h5>
+            <h5><img src="{{ url_for('static', filename='image/flipdoc.svg') }}" alt="" width="24" height="24" style="display:inline-block;vertical-align:middle;margin-right:8px;">FlipDoc</h5>
             <p>Professional PDF to Word conversion. AI-powered OCR with 95%+ accuracy. Fast, secure, no registration required.</p>
         </div>
         <div class="footer-col">
