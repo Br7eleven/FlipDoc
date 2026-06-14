@@ -13,7 +13,7 @@ from utils.file_handler import FileHandler
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
-app = Flask(__name__, static_folder='public', static_url_path='')
+app = Flask(__name__, static_folder='public')
 app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-production")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
