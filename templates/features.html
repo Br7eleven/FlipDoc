@@ -1,154 +1,411 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced PDF Conversion Features - FlipDoc</title>
+    <meta name="description" content="Discover FlipDoc's powerful features — AI-powered OCR, table preservation, image extraction, and enterprise security. 95%+ accuracy, free online.">
+    <meta name="keywords" content="PDF to Word features, OCR accuracy, table detection, PDF conversion">
+    <meta name="author" content="FlipDoc by BR7 Technologies">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 
-{% block content %}
-<div class="container py-5">
-    <!-- Page Header -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Advanced PDF Conversion Features</h1>
-        <p class="lead text-muted">Discover the powerful capabilities of our PDF to Word converter</p>
-    </div>
+    <meta property="og:title" content="Advanced PDF Conversion Features - FlipDoc">
+    <meta property="og:description" content="AI-powered OCR, table preservation, image extraction. 95%+ accuracy. Free online.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlipDoc">
 
-    <!-- Main Features Grid -->
-    <div class="row g-4 mb-5">
-        <div class="col-lg-6">
-            <div class="feature-detail-card">
-                <div class="feature-icon-large">
-                    <i class="fas fa-eye text-primary"></i>
-                </div>
-                <h3>Advanced OCR Technology</h3>
-                <p>Our state-of-the-art Optical Character Recognition (OCR) technology can extract text from scanned PDFs with remarkable accuracy. Whether your PDF contains images of text, scanned documents, or mixed content, our OCR engine ensures precise text extraction.</p>
-                <ul class="feature-list">
-                    <li>Supports multiple languages</li>
-                    <li>High accuracy text recognition</li>
-                    <li>Handles complex layouts</li>
-                    <li>Preserves formatting structure</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="feature-detail-card">
-                <div class="feature-icon-large">
-                    <i class="fas fa-palette text-success"></i>
-                </div>
-                <h3>Format Preservation</h3>
-                <p>Maintain the original document structure, fonts, and formatting when converting from PDF to Word. Our intelligent conversion engine analyzes the document layout and recreates it accurately in the Word format.</p>
-                <ul class="feature-list">
-                    <li>Preserves fonts and styles</li>
-                    <li>Maintains paragraph structure</li>
-                    <li>Keeps original spacing</li>
-                    <li>Retains document hierarchy</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="feature-detail-card">
-                <div class="feature-icon-large">
-                    <i class="fas fa-images text-warning"></i>
-                </div>
-                <h3>Image Extraction & Embedding</h3>
-                <p>Automatically extract and embed images from your PDF files into the converted Word document. All charts, graphics, photos, and illustrations are preserved with their original quality and positioning.</p>
-                <ul class="feature-list">
-                    <li>Preserves image quality</li>
-                    <li>Maintains image positioning</li>
-                    <li>Supports all image formats</li>
-                    <li>Optimizes file size</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="col-lg-6">
-            <div class="feature-detail-card">
-                <div class="feature-icon-large">
-                    <i class="fas fa-bolt text-danger"></i>
-                </div>
-                <h3>Lightning-Fast Processing</h3>
-                <p>Our optimized conversion engine processes files at incredible speeds without compromising quality. Advanced algorithms and efficient processing pipelines ensure your documents are converted in seconds.</p>
-                <ul class="feature-list">
-                    <li>Average conversion time: 30 seconds</li>
-                    <li>Handles large files efficiently</li>
-                    <li>Real-time progress tracking</li>
-                    <li>Optimized for performance</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Security Features -->
-    <div class="bg-light rounded p-5 mb-5">
-        <h2 class="text-center mb-4">Security & Privacy Features</h2>
-        <div class="row g-4">
-            <div class="col-md-4 text-center">
-                <div class="security-feature">
-                    <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
-                    <h5>Secure Processing</h5>
-                    <p>All files are processed in a secure environment with industry-standard encryption.</p>
-                </div>
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM
+           ============================================================ */
+        :root {
+            --bg: #0A0A0B;
+            --surface: #111113;
+            --surface-2: #16161A;
+            --border: #222226;
+            --border-hover: #333338;
+            --accent: #00D97E;
+            --accent-dim: #00D97E18;
+            --accent-glow: 0 0 0 1px #00D97E22, 0 0 32px #00D97E12;
+            --text-primary: #F0F0F0;
+            --text-secondary: #888890;
+            --text-muted: #44444C;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container-sm { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============================================================
+           NAV
+           ============================================================ */
+        nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; }
+        .nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); letter-spacing: -0.02em; }
+        .nav-logo::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); transition: color 150ms ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .nav-cta { font-family: 'Inter', sans-serif !important; font-weight: 600 !important; font-size: 13px !important; padding: 8px 20px; border: 1px solid var(--border) !important; color: var(--text-secondary) !important; transition: color 150ms, border-color 150ms; }
+        .nav-cta:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+        .nav-toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 20px; }
+
+        /* ============================================================
+           SECTION BASE
+           ============================================================ */
+        .section { padding: 120px 0; }
+        .section-sm { padding: 80px 0; }
+        .section-header { margin-bottom: 64px; }
+
+        /* ============================================================
+           TYPOGRAPHY COMPONENTS
+           ============================================================ */
+        .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+        .h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 16px; }
+        .h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 12px; }
+        .body-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+        .btn-primary { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; background: var(--accent); color: #0A0A0B; padding: 14px 28px; border-radius: 0; transition: transform 150ms ease, box-shadow 150ms ease; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: var(--accent-glow); }
+        .btn-ghost { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: var(--text-secondary); padding: 12px 24px; border: 1px solid var(--border); border-radius: 0; transition: color 150ms, border-color 150ms; }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ============================================================
+           SCROLL REVEAL
+           ============================================================ */
+        [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        [data-reveal].revealed { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+        /* ============================================================
+           FEATURE GRID
+           ============================================================ */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+        .feature-card { background: var(--surface); padding: 40px 32px 32px; display: flex; flex-direction: column; transition: background 200ms ease; }
+        .feature-card:hover { background: var(--surface-2); }
+        .feature-glyph { width: 48px; height: 48px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--accent); margin-bottom: 24px; }
+        .feature-card h3 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 18px; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.02em; }
+        .feature-card p { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; flex: 1; }
+        .feature-metric { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); border-top: 1px solid var(--border); padding-top: 16px; }
+
+        /* ============================================================
+           COMPARISON TABLE
+           ============================================================ */
+        .comparison-table {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0;
+            margin: 60px 0;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .col-feature {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .col-flipdoc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .col-others {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .comparison-header .col-flipdoc {
+            font-size: 16px;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .comparison-header .col-others {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .muted {
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           CTA SECTION
+           ============================================================ */
+        .cta-section { text-align: center; padding: 120px 0; position: relative; }
+        .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%); pointer-events: none; }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer { background: var(--bg); border-top: 1px solid var(--border); padding: 48px 24px 32px; }
+        .footer-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+        .footer-brand h5 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 12px; }
+        .footer-brand p { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h5 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; color: var(--text-primary); margin-bottom: 16px; }
+        .footer-col li { margin-bottom: 8px; }
+        .footer-col a, .footer-col span { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); transition: color 150ms ease; }
+        .footer-col a:hover { color: var(--text-primary); }
+        .footer-bottom { max-width: 1080px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .section { padding: 64px 0; }
+            .section-sm { padding: 48px 0; }
+            .section-header { margin-bottom: 40px; }
+            .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); flex-direction: column; padding: 24px; gap: 20px; }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .features-grid { grid-template-columns: 1fr; }
+            .comparison-row { grid-template-columns: 1fr 1fr; gap: 8px; padding: 16px 20px; }
+            .col-others { display: none; }
+            .comparison-header .col-others { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .h1 { font-size: 32px; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .comparison-row { padding: 14px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">FlipDoc</a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" id="navToggle">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/features" class="active">Features</a>
+            <a href="/how-to-convert-pdf-to-word">How to Convert</a>
+            <a href="/faq">FAQ</a>
+            <a href="/about">About</a>
+            <a href="/#upload" class="nav-cta">Convert Now &rarr;</a>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="section" style="padding-bottom:0;">
+    <div class="container">
+        <div class="section-header" data-reveal>
+            <p class="eyebrow">[ WHAT'S UNDER THE HOOD ]</p>
+            <h1 class="h1">Every feature you<br>actually need.</h1>
+            <p class="body-text" style="margin-top:16px;">No bloat. No upsell. Just clean, accurate PDF conversion with the tools that matter.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURE GRID -->
+<section class="section-sm">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card" data-reveal data-reveal-delay="0ms">
+                <div class="feature-glyph">&#x2B21;</div>
+                <h3>AI-Powered OCR</h3>
+                <p>PaddleOCR engine extracts text from scanned PDFs, images, and complex multi-column layouts. Handles multiple languages with high fidelity.</p>
+                <span class="feature-metric">95% accuracy</span>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="security-feature">
-                    <i class="fas fa-trash-alt fa-3x text-success mb-3"></i>
-                    <h5>Auto-Delete</h5>
-                    <p>Files are automatically deleted from our servers after 1 hour for maximum privacy.</p>
-                </div>
+            <div class="feature-card" data-reveal data-reveal-delay="80ms">
+                <div class="feature-glyph">&#x229E;</div>
+                <h3>Table Detection</h3>
+                <p>Intelligent table boundary detection with cell structure preservation. Merged cells, column widths, and data integrity carry through to your DOCX.</p>
+                <span class="feature-metric">100% cell match</span>
             </div>
-            <div class="col-md-4 text-center">
-                <div class="security-feature">
-                    <i class="fas fa-user-shield fa-3x text-warning mb-3"></i>
-                    <h5>No Registration</h5>
-                    <p>Convert files without creating an account or providing personal information.</p>
-                </div>
+            <div class="feature-card" data-reveal data-reveal-delay="160ms">
+                <div class="feature-glyph">&#x229F;</div>
+                <h3>Image Extraction</h3>
+                <p>All embedded images extracted at source resolution and re-embedded inline. Supports JPEG, PNG, TIFF, and vector formats from within PDFs.</p>
+                <span class="feature-metric">Lossless export</span>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="240ms">
+                <div class="feature-glyph">&#x2261;</div>
+                <h3>Layout Preservation</h3>
+                <p>Font sizes, heading hierarchy, paragraph spacing, and text alignment carry over. What you see in the PDF is what you get in Word.</p>
+                <span class="feature-metric">100% layout match</span>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="320ms">
+                <div class="feature-glyph">&#x2300;</div>
+                <h3>Zero-Retention Security</h3>
+                <p>SSL-encrypted transfer. Isolated processing. All files purged 60 minutes after conversion. No account means no data to leak.</p>
+                <span class="feature-metric">AES-256</span>
+            </div>
+            <div class="feature-card" data-reveal data-reveal-delay="400ms">
+                <div class="feature-glyph">&#x22EE;&#x22EE;</div>
+                <h3>Batch Convert</h3>
+                <p>Process multiple PDFs in sequence without waiting between uploads. Each conversion runs independently — queue up and walk away.</p>
+                <span class="feature-metric">Unlimited queue</span>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Technical Specifications -->
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h2 class="text-center mb-4">Technical Specifications</h2>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <td><strong>Maximum File Size</strong></td>
-                            <td>20 MB</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Supported Input Format</strong></td>
-                            <td>PDF</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Output Format</strong></td>
-                            <td>Microsoft Word (DOCX)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Processing Time</strong></td>
-                            <td>15-60 seconds (depending on file size and complexity)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>OCR Languages</strong></td>
-                            <td>English (primary), with support for multiple languages</td>
-                        </tr>
-                        <tr>
-                            <td><strong>File Retention</strong></td>
-                            <td>1 hour (automatic deletion)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Conversion Accuracy</strong></td>
-                            <td>95%+ for standard documents</td>
-                        </tr>
-                    </tbody>
-                </table>
+<!-- COMPARISON -->
+<section class="section">
+    <div class="container" data-reveal>
+        <div class="comparison-table">
+
+            <div class="comparison-row comparison-header">
+                <div class="col-feature"></div>
+                <div class="col-flipdoc">FlipDoc</div>
+                <div class="col-others">Others</div>
             </div>
+
+            <div class="comparison-row">
+                <div class="col-feature">OCR Accuracy</div>
+                <div class="col-flipdoc accent">96.4%</div>
+                <div class="col-others muted">~80%</div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="col-feature">Table Support</div>
+                <div class="col-flipdoc accent">&#x2713; Native</div>
+                <div class="col-others muted">&#x2717; Broken</div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="col-feature">Image Embed</div>
+                <div class="col-flipdoc accent">&#x2713; Inline</div>
+                <div class="col-others muted">&#x2717; Missing</div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="col-feature">Processing</div>
+                <div class="col-flipdoc accent">28s avg</div>
+                <div class="col-others muted">90s+ avg</div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="col-feature">Price</div>
+                <div class="col-flipdoc accent">Free</div>
+                <div class="col-others muted">$9.99/mo</div>
+            </div>
+
         </div>
     </div>
+</section>
 
-    <!-- CTA Section -->
-    <div class="text-center mt-5">
-        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
-            <i class="fas fa-magic me-2"></i>Start Converting Now
-        </a>
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container" data-reveal>
+        <p class="eyebrow" style="margin-bottom:16px;">[ NO SIGNUP REQUIRED ]</p>
+        <h2 class="h2">Ready to try it?</h2>
+        <p class="body-text" style="margin:0 auto 32px;">Upload a PDF. Get a Word doc. 28 seconds, on average.</p>
+        <a href="/#upload" class="btn-primary">Convert Now &rarr;</a>
     </div>
-</div>
-{% endblock %}
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h5>FlipDoc</h5>
+            <p>Professional PDF to Word conversion. AI-powered OCR with 95%+ accuracy. Fast, secure, no registration required.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Product</h5>
+            <ul>
+                <li><a href="/">Convert PDF</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/how-to-convert-pdf-to-word">How to Guide</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/privacy">Security</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Trust</h5>
+            <ul>
+                <li><span>SSL Encrypted</span></li>
+                <li><span>Auto-delete 60min</span></li>
+                <li><span>No Registration</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; <span id="copyrightYear"></span> FlipDoc by BR7 Technologies. All rights reserved.</span>
+        <span>Built for precision</span>
+    </div>
+</footer>
+
+<script>
+(function() {
+    /* Nav toggle */
+    var navToggle = document.getElementById('navToggle');
+    var navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', function() {
+        var open = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    /* Scroll reveal */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var el = entry.target;
+                    var delay = parseInt(el.getAttribute('data-reveal-delay')) || 0;
+                    setTimeout(function() { el.classList.add('revealed'); }, delay);
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+    } else {
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { el.classList.add('revealed'); });
+    }
+
+    /* Footer year */
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

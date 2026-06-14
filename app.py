@@ -28,6 +28,7 @@ ALLOWED_EXTENSIONS = {'pdf'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CONVERTED_FOLDER'] = CONVERTED_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
+app.config['TEMPLATES_AUTO_RELOAD'] = True  # Always reload templates from disk
 
 # Ensure directories exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -53,6 +54,10 @@ def cleanup_old_files():
 # Start cleanup thread
 cleanup_thread = threading.Thread(target=cleanup_old_files, daemon=True)
 cleanup_thread.start()
+
+# Startup health check — verify OCR engine availability
+_ocr = PDFConverter().ocr
+logging.info(f"🚀 FlipDoc v2.0 started — OCR Engine: {_ocr.engine_name}")
 
 @app.route('/')
 def index():
@@ -86,8 +91,8 @@ def faq():
 def privacy():
     """Privacy policy page"""
     return render_template('privacy.html',
-                         title="Privacy Policy - PDF to Word Converter",
-                         description="Learn how we protect your data and privacy when using our PDF to Word conversion service.")
+                         title="Privacy Policy - FlipDoc",
+                         description="Learn how FlipDoc protects your data and privacy. Files encrypted, auto-deleted after 1 hour. No registration required. Your documents stay private.")
 
 @app.route('/about')
 def about():

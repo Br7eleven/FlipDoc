@@ -1,180 +1,359 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Convert PDF to Word - Step by Step Guide - FlipDoc</title>
+    <meta name="description" content="Learn how to convert PDF files to Word documents. Complete step-by-step guide with tips for best conversion results.">
+    <meta name="keywords" content="PDF to Word guide, how to convert PDF, PDF conversion tutorial, FlipDoc guide">
+    <meta name="author" content="FlipDoc by BR7 Technologies">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 
-{% block content %}
-<div class="container py-5">
-    <!-- Page Header -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">How to Convert PDF to Word Document</h1>
-        <p class="lead text-muted">Complete step-by-step guide for perfect conversions</p>
+    <meta property="og:title" content="How to Convert PDF to Word - Step by Step Guide - FlipDoc">
+    <meta property="og:description" content="Complete step-by-step guide to convert your PDF files into editable Word documents. Fast, accurate, free.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlipDoc">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM
+           ============================================================ */
+        :root {
+            --bg: #0A0A0B;
+            --surface: #111113;
+            --surface-2: #16161A;
+            --border: #222226;
+            --border-hover: #333338;
+            --accent: #00D97E;
+            --accent-dim: #00D97E18;
+            --accent-glow: 0 0 0 1px #00D97E22, 0 0 32px #00D97E12;
+            --text-primary: #F0F0F0;
+            --text-secondary: #888890;
+            --text-muted: #44444C;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container-sm { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============================================================
+           NAV
+           ============================================================ */
+        nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; }
+        .nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); letter-spacing: -0.02em; }
+        .nav-logo::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); transition: color 150ms ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .nav-cta { font-family: 'Inter', sans-serif !important; font-weight: 600 !important; font-size: 13px !important; padding: 8px 20px; border: 1px solid var(--border) !important; color: var(--text-secondary) !important; transition: color 150ms, border-color 150ms; }
+        .nav-cta:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+        .nav-toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 20px; }
+
+        /* ============================================================
+           SECTION BASE
+           ============================================================ */
+        .section { padding: 120px 0; }
+        .section-sm { padding: 80px 0; }
+        .section-header { margin-bottom: 64px; }
+
+        /* ============================================================
+           TYPOGRAPHY COMPONENTS
+           ============================================================ */
+        .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+        .h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 16px; }
+        .h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 12px; }
+        .body-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+        .btn-primary { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; background: var(--accent); color: #0A0A0B; padding: 14px 28px; border-radius: 0; transition: transform 150ms ease, box-shadow 150ms ease; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: var(--accent-glow); }
+
+        /* ============================================================
+           SCROLL REVEAL
+           ============================================================ */
+        [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        [data-reveal].revealed { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+        /* ============================================================
+           TIMELINE
+           ============================================================ */
+        .timeline { position: relative; padding-left: 120px; }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 36px; width: 1px; background: var(--border); }
+        .timeline-step { position: relative; padding-bottom: 80px; }
+        .timeline-step:last-child { padding-bottom: 0; }
+        .timeline-step::before { content: ''; position: absolute; top: 8px; left: -84px; width: 8px; height: 8px; background: var(--accent); z-index: 1; }
+        .step-number { position: absolute; left: -120px; top: -16px; font-family: 'JetBrains Mono', monospace; font-size: 72px; font-weight: 600; color: var(--text-muted); line-height: 1; user-select: none; }
+        .step-title { font-family: 'Inter', sans-serif; font-weight: 800; font-size: 28px; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.03em; }
+        .step-desc { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; margin-bottom: 24px; }
+        .step-visual { background: var(--surface); border: 1px solid var(--border); padding: 24px 28px; }
+        .step-visual .terminal-mini { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); line-height: 1.9; }
+        .step-visual .terminal-mini .grn { color: var(--accent); }
+        .step-visual .upload-mini { display: flex; align-items: center; gap: 16px; }
+        .step-visual .upload-mini .file-icon-block { width: 40px; height: 48px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .step-visual .upload-mini .drop-zone { flex: 1; height: 48px; border: 2px dashed var(--border); display: flex; align-items: center; padding: 0 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+        .step-visual .download-mini { display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-primary); padding: 12px 0; }
+        .step-visual .download-mini .dl-arrow { font-size: 24px; color: var(--accent); }
+        .step-visual .file-preview { background: var(--surface-2); border: 1px solid var(--border); padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+
+        /* ============================================================
+           FAQ ACCORDION
+           ============================================================ */
+        .faq-accordion { border-top: 1px solid var(--border); }
+        .faq-item { border-bottom: 1px solid var(--border); transition: border-color 200ms ease; }
+        .faq-item[open] { border-bottom-color: var(--accent); }
+        .faq-question { padding: 20px 0; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: var(--text-primary); display: flex; align-items: center; justify-content: space-between; list-style: none; }
+        .faq-question::-webkit-details-marker { display: none; }
+        .faq-question::after { content: '+'; font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--text-muted); margin-left: 16px; flex-shrink: 0; transition: color 150ms; }
+        .faq-item[open] .faq-question::after { content: '\2212'; color: var(--accent); }
+        .faq-answer { padding: 0 0 24px; font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-secondary); line-height: 1.8; animation: fadeAnswer 0.3s ease; }
+        @keyframes fadeAnswer { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+        /* ============================================================
+           CTA SECTION
+           ============================================================ */
+        .cta-section { text-align: center; padding: 120px 0; position: relative; }
+        .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%); pointer-events: none; }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer { background: var(--bg); border-top: 1px solid var(--border); padding: 48px 24px 32px; }
+        .footer-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+        .footer-brand h5 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 12px; }
+        .footer-brand p { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h5 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; color: var(--text-primary); margin-bottom: 16px; }
+        .footer-col li { margin-bottom: 8px; }
+        .footer-col a, .footer-col span { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); transition: color 150ms ease; }
+        .footer-col a:hover { color: var(--text-primary); }
+        .footer-bottom { max-width: 1080px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .section { padding: 64px 0; }
+            .section-header { margin-bottom: 40px; }
+            .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); flex-direction: column; padding: 24px; gap: 20px; }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .timeline { padding-left: 64px; }
+            .timeline::before { left: 28px; }
+            .timeline-step::before { left: -36px; }
+            .step-number { left: -64px; font-size: 48px; top: -4px; }
+            .step-title { font-size: 22px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .h1 { font-size: 32px; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .timeline { padding-left: 48px; }
+            .timeline::before { left: 18px; }
+            .timeline-step::before { left: -30px; width: 6px; height: 6px; }
+            .step-number { left: -50px; font-size: 36px; top: 0; }
+            .step-title { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">FlipDoc</a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" id="navToggle">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/features">Features</a>
+            <a href="/how-to-convert-pdf-to-word" class="active">How to Convert</a>
+            <a href="/faq">FAQ</a>
+            <a href="/about">About</a>
+            <a href="/#upload" class="nav-cta">Convert Now &rarr;</a>
+        </div>
     </div>
+</nav>
 
-    <!-- Quick Steps -->
-    <div class="row g-4 mb-5">
-        <div class="col-md-4">
-            <div class="how-to-step">
-                <div class="step-number-large">1</div>
-                <h4>Upload Your PDF</h4>
-                <p>Drag and drop your PDF file onto the upload area or click to browse and select your file. Maximum file size is 20MB.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="how-to-step">
-                <div class="step-number-large">2</div>
-                <h4>Automatic Processing</h4>
-                <p>Our advanced engine analyzes your PDF and converts it to Word format. OCR is applied automatically for scanned documents.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="how-to-step">
-                <div class="step-number-large">3</div>
-                <h4>Download Result</h4>
-                <p>Once conversion is complete, download your Word document and start editing immediately in Microsoft Word or any compatible editor.</p>
-            </div>
+<!-- PAGE HEADER -->
+<section class="section" style="padding-bottom:0;">
+    <div class="container">
+        <div class="section-header" data-reveal>
+            <p class="eyebrow">[ THREE STEPS. THAT'S IT. ]</p>
+            <h1 class="h1">Upload. Convert.<br>Download.</h1>
+            <p class="body-text" style="margin-top:16px;">No account. No waiting. Files are processed securely and deleted in 60 minutes.</p>
         </div>
     </div>
+</section>
 
-    <!-- Detailed Instructions -->
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <h2 class="mb-4">Detailed Instructions</h2>
-            
-            <div class="instruction-section">
-                <h4><i class="fas fa-upload text-primary me-2"></i>Step 1: Uploading Your PDF File</h4>
-                <p>There are two ways to upload your PDF file:</p>
-                <ul>
-                    <li><strong>Drag & Drop:</strong> Simply drag your PDF file from your computer and drop it onto the upload area on our homepage.</li>
-                    <li><strong>Browse & Select:</strong> Click on the upload area to open your file browser, then navigate to and select your PDF file.</li>
-                </ul>
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <strong>File Requirements:</strong> Only PDF files are accepted, with a maximum size of 20MB.
+<!-- TIMELINE -->
+<section class="section">
+    <div class="container">
+        <div class="timeline">
+            <div class="timeline-step" data-reveal>
+                <span class="step-number">01</span>
+                <h3 class="step-title">Upload Your PDF</h3>
+                <p class="step-desc">Drag and drop or click to select. Up to 20MB. Supports scanned, text, and mixed PDFs.</p>
+                <div class="step-visual">
+                    <div class="upload-mini">
+                        <div class="file-icon-block">&#x2B21;</div>
+                        <div class="drop-zone">drop PDF here or click to browse...</div>
+                    </div>
+                    <div class="file-preview" style="margin-top:12px;">report_q4.pdf &mdash; 1.8MB</div>
                 </div>
             </div>
-
-            <div class="instruction-section">
-                <h4><i class="fas fa-cogs text-success me-2"></i>Step 2: Conversion Process</h4>
-                <p>Once you upload your file, the conversion process begins automatically:</p>
-                <ol>
-                    <li><strong>File Analysis:</strong> Our system analyzes the PDF structure and content type.</li>
-                    <li><strong>Text Extraction:</strong> Text is extracted using advanced algorithms.</li>
-                    <li><strong>OCR Processing:</strong> If needed, OCR technology extracts text from scanned images.</li>
-                    <li><strong>Image Processing:</strong> Images and graphics are extracted and optimized.</li>
-                    <li><strong>Word Generation:</strong> A properly formatted Word document is created.</li>
-                </ol>
-                <p>You can track the progress in real-time with our progress indicator.</p>
-            </div>
-
-            <div class="instruction-section">
-                <h4><i class="fas fa-download text-warning me-2"></i>Step 3: Downloading Your Word Document</h4>
-                <p>When conversion is complete:</p>
-                <ul>
-                    <li>You'll see a green "Download Word Document" button</li>
-                    <li>Click the button to download your converted file</li>
-                    <li>The file will be saved to your default download location</li>
-                    <li>Open the file in Microsoft Word, Google Docs, or any compatible word processor</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tips for Best Results -->
-    <div class="bg-light rounded p-5 mt-5">
-        <h2 class="text-center mb-4">Tips for Best Conversion Results</h2>
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="tip-card">
-                    <h5><i class="fas fa-file-alt text-primary me-2"></i>For Text-Based PDFs</h5>
-                    <ul>
-                        <li>Ensure the PDF is not password-protected</li>
-                        <li>High-quality PDFs produce better results</li>
-                        <li>Simple layouts convert more accurately</li>
-                        <li>Standard fonts are preserved better</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="tip-card">
-                    <h5><i class="fas fa-camera text-success me-2"></i>For Scanned PDFs</h5>
-                    <ul>
-                        <li>Ensure good image quality and contrast</li>
-                        <li>Straight, non-skewed pages work best</li>
-                        <li>Clear, readable text improves OCR accuracy</li>
-                        <li>Avoid handwritten text for best results</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Troubleshooting -->
-    <div class="mt-5">
-        <h2 class="text-center mb-4">Troubleshooting Common Issues</h2>
-        <div class="accordion" id="troubleshootingAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble1">
-                        File upload fails or times out
-                    </button>
-                </h2>
-                <div id="trouble1" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
-                    <div class="accordion-body">
-                        <p>If your file upload fails:</p>
-                        <ul>
-                            <li>Check that your file is under 20MB</li>
-                            <li>Ensure you have a stable internet connection</li>
-                            <li>Try refreshing the page and uploading again</li>
-                            <li>Make sure the file is a valid PDF format</li>
-                        </ul>
+            <div class="timeline-step" data-reveal>
+                <span class="step-number">02</span>
+                <h3 class="step-title">AI Processes Your Document</h3>
+                <p class="step-desc">OCR runs, tables are detected, images are extracted. Average completion: 28 seconds.</p>
+                <div class="step-visual">
+                    <div class="terminal-mini">
+                        <span>Scanning document...</span> <span style="color:var(--border);">████████</span><span style="color:var(--accent);">██</span> 80%<br>
+                        <span>Running OCR pass...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
+                        <span>Preserving layout...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
+                        <span>Exporting to .docx...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
+                        <span class="grn">Conversion complete in 28s</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble2">
-                        Conversion takes too long
-                    </button>
-                </h2>
-                <div id="trouble2" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
-                    <div class="accordion-body">
-                        <p>Long conversion times may be due to:</p>
-                        <ul>
-                            <li>Large file size or many pages</li>
-                            <li>Complex layouts requiring detailed processing</li>
-                            <li>Scanned documents needing OCR processing</li>
-                            <li>High server load during peak times</li>
-                        </ul>
-                        <p>Please be patient, as quality conversions take time.</p>
+            <div class="timeline-step" data-reveal>
+                <span class="step-number">03</span>
+                <h3 class="step-title">Download Your Word File</h3>
+                <p class="step-desc">Clean .docx ready to edit in Microsoft Word or Google Docs.</p>
+                <div class="step-visual">
+                    <div class="download-mini">
+                        <span class="dl-arrow">&darr;</span>
+                        <span>report_q4.docx</span>
+                        <span style="color:var(--text-muted);">840KB</span>
                     </div>
-                </div>
-            </div>
-            
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trouble3">
-                        Poor conversion quality
-                    </button>
-                </h2>
-                <div id="trouble3" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
-                    <div class="accordion-body">
-                        <p>To improve conversion quality:</p>
-                        <ul>
-                            <li>Use high-quality, clear PDF files</li>
-                            <li>Avoid heavily formatted or complex layouts</li>
-                            <li>Ensure scanned documents have good contrast</li>
-                            <li>Try converting individual pages if the document is very large</li>
-                        </ul>
+                    <div class="file-preview">
+                        Ready to edit &mdash; Microsoft Word &#8226; Google Docs &#8226; LibreOffice
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- CTA Section -->
-    <div class="text-center mt-5">
-        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
-            <i class="fas fa-magic me-2"></i>Start Converting Your PDF
-        </a>
+<!-- FAQ STRIP -->
+<section class="section-sm">
+    <div class="container-sm">
+        <div class="section-header" data-reveal>
+            <p class="eyebrow">[ QUICK ANSWERS ]</p>
+            <h2 class="h2">Common questions</h2>
+        </div>
+        <div class="faq-accordion" data-reveal>
+            <details class="faq-item">
+                <summary class="faq-question">Is my PDF data secure?</summary>
+                <div class="faq-answer">Yes. All uploads use SSL/TLS encryption. Files are processed in isolated environments and automatically deleted from our servers after 60 minutes. We never access, share, or store your document contents beyond the conversion window.</div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">What happens to my file after conversion?</summary>
+                <div class="faq-answer">Both your uploaded PDF and the converted DOCX are automatically purged from our servers 60 minutes after upload. We recommend downloading your converted file immediately. There is no way for us (or anyone else) to retrieve your files after they're deleted.</div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Does it work on scanned PDFs?</summary>
+                <div class="faq-answer">Yes. Our PaddleOCR engine is designed specifically for scanned documents, images, and PDFs with embedded text. It achieves 95%+ accuracy on clear scans. Best results come from PDFs with good contrast, straight pages, and readable text.</div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">What's the file size limit?</summary>
+                <div class="faq-answer">20MB per file. This covers the vast majority of PDF documents — including multipage reports, presentations, and ebooks. If your file is larger, try splitting it into smaller sections before uploading.</div>
+            </details>
+            <details class="faq-item">
+                <summary class="faq-question">Can I convert multiple PDFs at once?</summary>
+                <div class="faq-answer">You can queue multiple conversions sequentially — upload one, start the conversion, then upload the next while the first processes. Each conversion runs independently. Full batch upload is coming in a future update.</div>
+            </details>
+        </div>
     </div>
-</div>
-{% endblock %}
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container" data-reveal>
+        <p class="eyebrow" style="margin-bottom:16px;">[ READY TO TRY? ]</p>
+        <h2 class="h2">Upload your first PDF now.</h2>
+        <p class="body-text" style="margin:0 auto 32px;">28 seconds to a clean, editable Word document.</p>
+        <a href="/#upload" class="btn-primary">Convert Now &rarr;</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h5>FlipDoc</h5>
+            <p>Professional PDF to Word conversion. AI-powered OCR with 95%+ accuracy. Fast, secure, no registration required.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Product</h5>
+            <ul>
+                <li><a href="/">Convert PDF</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/how-to-convert-pdf-to-word">How to Guide</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/privacy">Security</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Trust</h5>
+            <ul>
+                <li><span>SSL Encrypted</span></li>
+                <li><span>Auto-delete 60min</span></li>
+                <li><span>No Registration</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; <span id="copyrightYear"></span> FlipDoc by BR7 Technologies. All rights reserved.</span>
+        <span>Built for precision</span>
+    </div>
+</footer>
+
+<script>
+(function() {
+    var navToggle = document.getElementById('navToggle');
+    var navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', function() {
+        var open = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var el = entry.target;
+                    var delay = parseInt(el.getAttribute('data-reveal-delay')) || 0;
+                    setTimeout(function() { el.classList.add('revealed'); }, delay);
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+    } else {
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { el.classList.add('revealed'); });
+    }
+
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

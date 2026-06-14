@@ -1,257 +1,397 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - FlipDoc</title>
+    <meta name="description" content="Find answers about PDF to Word conversion — file sizes, OCR accuracy, security, supported formats, and troubleshooting.">
+    <meta name="keywords" content="PDF to Word FAQ, FlipDoc questions, PDF conversion help">
+    <meta name="author" content="FlipDoc by BR7 Technologies">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 
-{% block content %}
-<div class="container py-5">
-    <!-- Page Header -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Frequently Asked Questions</h1>
-        <p class="lead text-muted">Find answers to common questions about PDF to Word conversion</p>
+    <meta property="og:title" content="Frequently Asked Questions - FlipDoc">
+    <meta property="og:description" content="Answers about PDF to Word conversion — file sizes, OCR accuracy, security, supported formats.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="FlipDoc">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM
+           ============================================================ */
+        :root {
+            --bg: #0A0A0B;
+            --surface: #111113;
+            --surface-2: #16161A;
+            --border: #222226;
+            --border-hover: #333338;
+            --accent: #00D97E;
+            --accent-dim: #00D97E18;
+            --accent-glow: 0 0 0 1px #00D97E22, 0 0 32px #00D97E12;
+            --text-primary: #F0F0F0;
+            --text-secondary: #888890;
+            --text-muted: #44444C;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============================================================
+           NAV
+           ============================================================ */
+        nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; }
+        .nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); letter-spacing: -0.02em; }
+        .nav-logo::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 32px; }
+        .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); transition: color 150ms ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .nav-cta { font-family: 'Inter', sans-serif !important; font-weight: 600 !important; font-size: 13px !important; padding: 8px 20px; border: 1px solid var(--border) !important; color: var(--text-secondary) !important; transition: color 150ms, border-color 150ms; }
+        .nav-cta:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+        .nav-toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 20px; }
+
+        /* ============================================================
+           SECTION BASE
+           ============================================================ */
+        .section { padding: 120px 0; }
+        .section-sm { padding: 80px 0; }
+
+        /* ============================================================
+           TYPOGRAPHY COMPONENTS
+           ============================================================ */
+        .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+        .h1 { font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(36px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.04em; color: var(--text-primary); margin-bottom: 16px; }
+        .h2 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--text-primary); margin-bottom: 12px; }
+        .body-text { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; }
+        .btn-primary { display: inline-block; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; background: var(--accent); color: #0A0A0B; padding: 14px 28px; border-radius: 0; transition: transform 150ms ease, box-shadow 150ms ease; }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: var(--accent-glow); }
+
+        /* ============================================================
+           SCROLL REVEAL
+           ============================================================ */
+        [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        [data-reveal].revealed { opacity: 1; transform: none; }
+        @media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+        /* ============================================================
+           FAQ LAYOUT
+           ============================================================ */
+        .faq-layout { display: grid; grid-template-columns: 200px 1fr; gap: 64px; }
+        .faq-sidebar { position: sticky; top: 80px; align-self: start; }
+        .faq-category-list { display: flex; flex-direction: column; gap: 4px; }
+        .faq-category-link { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); padding: 8px 0; cursor: pointer; transition: color 150ms ease; background: none; border: none; text-align: left; }
+        .faq-category-link:hover, .faq-category-link.active { color: var(--accent); }
+        .faq-content { display: flex; flex-direction: column; gap: 40px; }
+        .faq-category-group { border-top: 1px solid var(--border); padding-top: 32px; }
+        .faq-category-group:first-child { border-top: none; padding-top: 0; }
+        .faq-category-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 20px; }
+        .faq-entry { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .faq-entry:last-child { border-bottom: none; }
+        .faq-entry .q { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 17px; color: var(--text-primary); margin-bottom: 10px; }
+        .faq-entry .a { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+
+        /* ============================================================
+           NO RESULTS
+           ============================================================ */
+        .no-results { display: none; text-align: center; padding: 80px 0; }
+        .no-results.visible { display: block; }
+        .no-results .icon { font-family: 'JetBrains Mono', monospace; font-size: 40px; color: var(--text-muted); margin-bottom: 16px; }
+        .no-results h3 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px; color: var(--text-primary); margin-bottom: 8px; }
+        .no-results p { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-secondary); }
+
+        /* ============================================================
+           CTA SECTION
+           ============================================================ */
+        .cta-section { text-align: center; padding: 120px 0; position: relative; border-top: 1px solid var(--border); }
+        .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%); pointer-events: none; }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer { background: var(--bg); border-top: 1px solid var(--border); padding: 48px 24px 32px; }
+        .footer-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+        .footer-brand h5 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 12px; }
+        .footer-brand p { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+        .footer-col h5 { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; color: var(--text-primary); margin-bottom: 16px; }
+        .footer-col li { margin-bottom: 8px; }
+        .footer-col a, .footer-col span { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary); transition: color 150ms ease; }
+        .footer-col a:hover { color: var(--text-primary); }
+        .footer-bottom { max-width: 1080px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .section { padding: 64px 0; }
+            .section-sm { padding: 48px 0; }
+            .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); flex-direction: column; padding: 24px; gap: 20px; }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .faq-layout { grid-template-columns: 1fr; gap: 40px; }
+            .faq-sidebar { position: static; display: flex; overflow-x: auto; padding-bottom: 8px; }
+            .faq-category-list { flex-direction: row; gap: 20px; white-space: nowrap; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .h1 { font-size: 32px; }
+        }
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">FlipDoc</a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" id="navToggle">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/features">Features</a>
+            <a href="/how-to-convert-pdf-to-word">How to Convert</a>
+            <a href="/faq" class="active">FAQ</a>
+            <a href="/about">About</a>
+            <a href="/#upload" class="nav-cta">Convert Now &rarr;</a>
+        </div>
     </div>
+</nav>
 
-    <!-- FAQ Accordion -->
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="accordion" id="faqAccordion">
-                
-                <!-- General Questions -->
-                <div class="faq-category mb-4">
-                    <h3 class="text-primary mb-3">General Questions</h3>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                Is the PDF to Word converter completely free?
-                            </button>
-                        </h2>
-                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes, our PDF to Word converter is completely free to use. There are no hidden charges, subscription fees, or premium features. You can convert as many PDF files as you need without any cost.
-                            </div>
-                        </div>
+<!-- PAGE HEADER -->
+<section class="section" style="padding-bottom:40px;">
+    <div class="container">
+        <div data-reveal>
+            <p class="eyebrow">[ COMMON QUESTIONS ]</p>
+            <h1 class="h1">Answers, not<br>marketing.</h1>
+            <p class="body-text" style="margin-top:16px;">If something's unclear, email us. We reply.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ CONTENT -->
+<section class="section-sm">
+    <div class="container">
+        <div class="faq-layout">
+            <aside class="faq-sidebar" data-reveal>
+                <div class="faq-category-list" id="categoryNav">
+                    <button class="faq-category-link active" data-target="security">// Security</button>
+                    <button class="faq-category-link" data-target="files">// File Limits</button>
+                    <button class="faq-category-link" data-target="accuracy">// Accuracy</button>
+                    <button class="faq-category-link" data-target="formats">// Formats</button>
+                    <button class="faq-category-link" data-target="pricing">// Pricing</button>
+                </div>
+            </aside>
+
+            <div class="faq-content" id="faqContent">
+                <div class="faq-category-group" id="cat-security" data-category="security">
+                    <h3 class="faq-category-title">Security</h3>
+                    <div class="faq-entry">
+                        <p class="q">Is my data safe and secure?</p>
+                        <p class="a">Absolutely. All files are processed using secure, encrypted connections (SSL/TLS). Your uploaded documents are only accessible during processing and are automatically deleted after one hour. We do not store, share, or access your document contents.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                Do I need to create an account or register?
-                            </button>
-                        </h2>
-                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                No registration is required. You can start converting PDF files immediately without creating an account or providing any personal information. This ensures your privacy and makes the process quick and hassle-free.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">How long do you keep my files?</p>
+                        <p class="a">All uploaded and converted files are automatically deleted from our servers after 1 hour. This ensures your privacy and keeps our systems running efficiently. We recommend downloading your converted file immediately after processing.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                How long does the conversion process take?
-                            </button>
-                        </h2>
-                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Most PDF files are converted within 15-60 seconds, depending on the file size and complexity. Simple text-based PDFs convert faster, while scanned documents requiring OCR processing may take a bit longer. You can track the progress in real-time.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">Can you convert password-protected PDFs?</p>
+                        <p class="a">Currently, FlipDoc cannot process password-protected or encrypted PDF files. You will need to remove the password protection from your PDF before uploading it for conversion. This is a security measure to protect document ownership.</p>
+                    </div>
+                    <div class="faq-entry">
+                        <p class="q">Is my connection encrypted during upload?</p>
+                        <p class="a">Yes, all file uploads and downloads use SSL/TLS encryption (HTTPS). This ensures your data is protected during transit between your device and our servers. We follow industry-standard security practices for all data transfers.</p>
                     </div>
                 </div>
 
-                <!-- File & Format Questions -->
-                <div class="faq-category mb-4">
-                    <h3 class="text-success mb-3">File & Format Questions</h3>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                What is the maximum file size I can upload?
-                            </button>
-                        </h2>
-                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                The maximum file size is 20MB. This limit ensures fast processing and optimal performance. If your PDF file is larger, consider splitting it into smaller sections or compressing it before uploading.
-                            </div>
-                        </div>
+                <div class="faq-category-group" id="cat-files" data-category="files">
+                    <h3 class="faq-category-title">File Limits</h3>
+                    <div class="faq-entry">
+                        <p class="q">What is the maximum file size I can upload?</p>
+                        <p class="a">The maximum file size is 20MB. This limit ensures fast processing and optimal performance for all users. If your PDF is larger, consider splitting it into smaller sections or compressing it before uploading.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                                Can you convert scanned PDF documents?
-                            </button>
-                        </h2>
-                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes! Our converter includes advanced OCR (Optical Character Recognition) technology that can extract text from scanned PDF documents, images, and photographs. The OCR accuracy is typically 95%+ for clear, well-scanned documents.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">How many pages can a PDF have?</p>
+                        <p class="a">Up to 100 pages per document. For larger documents, split into multiple PDFs and convert them separately. Most documents convert well within a single pass up to this limit.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
-                                What format is the output file?
-                            </button>
-                        </h2>
-                        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                The output file is in Microsoft Word format (.docx). This format is compatible with Microsoft Word, Google Docs, LibreOffice Writer, and most other word processing applications.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
-                                Are images and formatting preserved?
-                            </button>
-                        </h2>
-                        <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes, our converter preserves images, charts, graphics, and basic formatting from your PDF. We maintain the document structure, fonts, and layout as much as possible. However, very complex layouts might require minor adjustments.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">What should I do if my PDF won't convert?</p>
+                        <p class="a">First, check that your PDF is not corrupted, under 20MB, and not password-protected. Refresh the page and try uploading again. If the issue persists, try converting individual pages or check that the file is a valid PDF (not just renamed).</p>
                     </div>
                 </div>
 
-                <!-- Security & Privacy -->
-                <div class="faq-category mb-4">
-                    <h3 class="text-warning mb-3">Security & Privacy</h3>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
-                                Is my data safe and secure?
-                            </button>
-                        </h2>
-                        <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Absolutely. All files are processed using secure, encrypted connections. Your uploaded files and converted documents are automatically deleted from our servers after 1 hour. We do not store, share, or access your documents.
-                            </div>
-                        </div>
+                <div class="faq-category-group" id="cat-accuracy" data-category="accuracy">
+                    <h3 class="faq-category-title">Accuracy</h3>
+                    <div class="faq-entry">
+                        <p class="q">How accurate is the OCR?</p>
+                        <p class="a">Our PaddleOCR engine achieves 95%+ accuracy on clear, well-scanned documents. Accuracy depends on the quality of your source PDF — good contrast, straight pages, and readable fonts produce the best results. Handwritten text is not well supported at this time.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
-                                Can you convert password-protected PDFs?
-                            </button>
-                        </h2>
-                        <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Currently, our converter cannot process password-protected or encrypted PDF files. You'll need to remove the password protection from your PDF before uploading it for conversion.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">Are images and formatting preserved?</p>
+                        <p class="a">Yes, FlipDoc preserves images, charts, graphics, tables, and basic formatting during conversion. We maintain document structure, font sizes, and layout as much as possible. Very complex layouts may require minor adjustments after conversion.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq10">
-                                How long do you keep my files?
-                            </button>
-                        </h2>
-                        <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                All uploaded and converted files are automatically deleted from our servers after 1 hour. This ensures your privacy and keeps our systems running efficiently. We recommend downloading your converted file immediately after conversion.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">What types of PDFs work best?</p>
+                        <p class="a">Text-based PDFs with clear fonts and simple layouts produce the most accurate conversions. Scanned documents with good contrast and resolution also work very well. For best results, ensure your PDF is not password-protected and is under 20MB.</p>
                     </div>
                 </div>
 
-                <!-- Technical Issues -->
-                <div class="faq-category mb-4">
-                    <h3 class="text-danger mb-3">Technical Issues</h3>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq11">
-                                What should I do if the conversion fails?
-                            </button>
-                        </h2>
-                        <div id="faq11" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                If conversion fails, try the following:
-                                <ul>
-                                    <li>Ensure your PDF file is not corrupted</li>
-                                    <li>Check that the file size is under 20MB</li>
-                                    <li>Make sure the PDF is not password-protected</li>
-                                    <li>Try refreshing the page and uploading again</li>
-                                    <li>If problems persist, try converting individual pages</li>
-                                </ul>
-                            </div>
-                        </div>
+                <div class="faq-category-group" id="cat-formats" data-category="formats">
+                    <h3 class="faq-category-title">Formats</h3>
+                    <div class="faq-entry">
+                        <p class="q">What format will I get after conversion?</p>
+                        <p class="a">The output file is in Microsoft Word format (.docx). This format is compatible with Microsoft Word, Google Docs, LibreOffice Writer, Apple Pages, and most other word processing applications. You can edit it immediately after download.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq12">
-                                Which browsers are supported?
-                            </button>
-                        </h2>
-                        <div id="faq12" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Our converter works with all modern web browsers including Chrome, Firefox, Safari, Edge, and Opera. For the best experience, we recommend using the latest version of your preferred browser.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">Can I use FlipDoc on my mobile device?</p>
+                        <p class="a">Yes. FlipDoc is fully responsive and works on smartphones and tablets. The interface adapts to your screen size. No app download is needed — just visit the website on any device with a browser.</p>
                     </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq13">
-                                Can I use this on mobile devices?
-                            </button>
-                        </h2>
-                        <div id="faq13" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes! Our converter is fully responsive and works perfectly on smartphones and tablets. The interface adapts to your screen size for optimal usability on any device.
-                            </div>
-                        </div>
+                    <div class="faq-entry">
+                        <p class="q">Do you support other output formats?</p>
+                        <p class="a">Currently we output only .docx (Microsoft Word) format. DOCX is the most widely compatible editable document format. Additional output formats may be added in the future based on user demand.</p>
                     </div>
                 </div>
 
-                <!-- Quality & Accuracy -->
-                <div class="faq-category mb-4">
-                    <h3 class="text-info mb-3">Quality & Accuracy</h3>
-                    
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq14">
-                                How accurate is the conversion?
-                            </button>
-                        </h2>
-                        <div id="faq14" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Our conversion accuracy is typically 95%+ for standard documents. Text-based PDFs with simple layouts convert with near-perfect accuracy. Scanned documents and complex layouts may require minor manual adjustments after conversion.
-                            </div>
-                        </div>
+                <div class="faq-category-group" id="cat-pricing" data-category="pricing">
+                    <h3 class="faq-category-title">Pricing</h3>
+                    <div class="faq-entry">
+                        <p class="q">Is FlipDoc completely free to use?</p>
+                        <p class="a">Yes, FlipDoc is completely free with no hidden charges, subscription fees, or premium tiers. You can convert as many PDF files as you need without any cost. We believe document conversion should be accessible to everyone.</p>
                     </div>
+                    <div class="faq-entry">
+                        <p class="q">Do I need to register or create an account?</p>
+                        <p class="a">No registration is required. You can start converting PDF files immediately without creating an account or providing any personal information. This ensures your privacy and makes the process quick and hassle-free.</p>
+                    </div>
+                    <div class="faq-entry">
+                        <p class="q">How long does the conversion process take?</p>
+                        <p class="a">Most PDF files are converted within 15-60 seconds, depending on file size and complexity. Simple text-based PDFs convert faster, while scanned documents requiring OCR processing may take a bit longer. You can track progress in real-time on the conversion page.</p>
+                    </div>
+                </div>
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq15">
-                                What if the converted document needs editing?
-                            </button>
-                        </h2>
-                        <div id="faq15" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                The converted Word document (.docx) is fully editable in Microsoft Word, Google Docs, or any compatible word processor. You can make any necessary adjustments to formatting, text, or layout after download.
-                            </div>
-                        </div>
-                    </div>
+                <div class="no-results" id="noResults">
+                    <div class="icon">&#x2300;</div>
+                    <h3>No matching questions</h3>
+                    <p>Try a different search term or browse the categories above.</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Still have questions? -->
-    <div class="text-center mt-5">
-        <div class="bg-light rounded p-4">
-            <h4>Still have questions?</h4>
-            <p class="mb-3">Can't find the answer you're looking for? Try our converter and experience the quality for yourself!</p>
-            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
-                <i class="fas fa-magic me-2"></i>Convert PDF to Word Now
-            </a>
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container" data-reveal>
+        <p class="eyebrow" style="margin-bottom:16px;">[ STILL HAVE QUESTIONS? ]</p>
+        <h2 class="h2">Try the converter yourself.</h2>
+        <p class="body-text" style="margin:0 auto 32px;">No signup. Instant results. 95%+ accuracy.</p>
+        <a href="/#upload" class="btn-primary">Convert PDF Now &rarr;</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h5>FlipDoc</h5>
+            <p>Professional PDF to Word conversion. AI-powered OCR with 95%+ accuracy. Fast, secure, no registration required.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Product</h5>
+            <ul>
+                <li><a href="/">Convert PDF</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/how-to-convert-pdf-to-word">How to Guide</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/privacy">Security</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h5>Trust</h5>
+            <ul>
+                <li><span>SSL Encrypted</span></li>
+                <li><span>Auto-delete 60min</span></li>
+                <li><span>No Registration</span></li>
+            </ul>
         </div>
     </div>
-</div>
-{% endblock %}
+    <div class="footer-bottom">
+        <span>&copy; <span id="copyrightYear"></span> FlipDoc by BR7 Technologies. All rights reserved.</span>
+        <span>Built for precision</span>
+    </div>
+</footer>
+
+<script>
+(function() {
+    /* Nav toggle */
+    var navToggle = document.getElementById('navToggle');
+    var navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', function() {
+        var open = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    /* Scroll reveal */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var el = entry.target;
+                    var delay = parseInt(el.getAttribute('data-reveal-delay')) || 0;
+                    setTimeout(function() { el.classList.add('revealed'); }, delay);
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+    } else {
+        document.querySelectorAll('[data-reveal]').forEach(function(el) { el.classList.add('revealed'); });
+    }
+
+    /* Category nav */
+    var categoryLinks = document.querySelectorAll('.faq-category-link');
+    var categoryGroups = document.querySelectorAll('.faq-category-group');
+    var noResults = document.getElementById('noResults');
+
+    categoryLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            categoryLinks.forEach(function(l) { l.classList.remove('active'); });
+            link.classList.add('active');
+
+            var target = link.getAttribute('data-target');
+            var anyVisible = false;
+            categoryGroups.forEach(function(group) {
+                if (group.getAttribute('data-category') === target) {
+                    group.style.display = '';
+                    anyVisible = true;
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+            noResults.classList.toggle('visible', !anyVisible);
+        });
+    });
+
+    /* Footer year */
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
