@@ -3,7 +3,7 @@
 > **Intelligent PDF to Word Converter** | Python + Flask + OCR  
 > Convert scanned PDFs and native PDFs to editable Word documents with intelligent text extraction and formatting preservation
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-flipdocconvert.up.railway.app-0ea5e9.svg)](https://flipdocconvert.up.railway.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-flipdocconverter.vercel.app-0ea5e9.svg)](https://flipdocconverter.vercel.app/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-%3E%3D3.8-brightgreen.svg)](https://python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0+-black.svg)](https://flask.palletsprojects.com)
@@ -46,7 +46,7 @@
 - ✅ **High Accuracy OCR** — Tesseract engine with preprocessing
 - ✅ **Format Preservation** — Maintains layout and styling
 - ✅ **Automatic Cleanup** — No manual file management
-- ✅ **Production Deployed** — Live at [flipdocconvert.up.railway.app](https://flipdocconvert.up.railway.app)
+- ✅ **Production Deployed** — Live at [flipdocconverter.vercel.app](https://flipdocconverter.vercel.app/)
 - ✅ **Fully Open Source** — MIT licensed, customizable
 
 ---
@@ -653,7 +653,7 @@ logging.basicConfig(
 - Railway auto-deploys on every push to main
 - View logs: Railway dashboard
 
-**Live Demo:** https://flipdocconvert.up.railway.app
+**Live Demo:** https://flipdocconverter.vercel.app/
 
 ### Option 2: Heroku
 
@@ -1025,7 +1025,7 @@ GitHub Issues: [FlipDoc Issues](https://github.com/Br7eleven/FlipDoc/issues)
 - [Pillow Documentation](https://pillow.readthedocs.io/)
 
 **Quick Links**
-- [Live Demo](https://flipdocconvert.up.railway.app)
+- [Live Demo](https://flipdocconverter.vercel.app/)
 - [GitHub Repository](https://github.com/Br7eleven/FlipDoc)
 - [Python.org](https://python.org/)
 - [Railway Docs](https://docs.railway.app/)
