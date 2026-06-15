@@ -1,0 +1,30 @@
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-inner">
+        <a href="/" class="nav-logo">
+            <svg width="24" height="30" viewBox="0 0 250 310" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="250" height="310" rx="16" fill="#16161A"/>
+                <path d="M165 0 L250 0 L250 85 Z" fill="#00D97E"/>
+                <path d="M165 0 L250 85 L165 85 Z" fill="#00D97E" opacity="0.25"/>
+                <rect x="33" y="120" width="110" height="13" rx="6" fill="#2A2A30"/>
+                <rect x="33" y="148" width="154" height="13" rx="6" fill="#2A2A30"/>
+                <rect x="33" y="176" width="88" height="13" rx="6" fill="#2A2A30"/>
+                <circle cx="200" cy="240" r="65" fill="#00D97E"/>
+                <path d="M175 240 L225 240" stroke="#0A0A0B" stroke-width="18" stroke-linecap="round"/>
+                <path d="M205 215 L230 240 L205 265" stroke="#0A0A0B" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="nav-logo-text">Flip<span style="color:#00D97E">Doc</span></span>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" id="navToggle">
+            &#9776;
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+            <a href="/features" class="{% if request.path == '/features' %}active{% endif %}">Features</a>
+            <a href="/how-to-convert-pdf-to-word" class="{% if request.path == '/how-to-convert-pdf-to-word' %}active{% endif %}">How to Convert</a>
+            <a href="/faq" class="{% if request.path == '/faq' %}active{% endif %}">FAQ</a>
+            <a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About</a>
+            <a href="{% if request.path == '/' %}#upload{% else %}/#upload{% endif %}" class="nav-cta">Convert Now{% if request.path != '/' %} &rarr;{% endif %}</a>
+        </div>
+    </div>
+</nav>
