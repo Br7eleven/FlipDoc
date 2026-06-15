@@ -1,0 +1,27 @@
+[Unit]
+Description=FlipDoc PDF to Word Converter
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/flipdoc
+Environment="PATH=/opt/flipdoc/venv/bin"
+EnvironmentFile=/etc/flipdoc/env
+ExecStart=/opt/flipdoc/venv/bin/gunicorn \
+    --workers 2 \
+    --bind 127.0.0.1:8000 \
+    --timeout 300 \
+    --graceful-timeout 30 \
+    --max-requests 100 \
+    --max-requests-jitter 20 \
+    --access-logfile /var/log/flipdoc/access.log \
+    --error-logfile /var/log/flipdoc/error.log \
+    --log-level info \
+    app:app
+Restart=always
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

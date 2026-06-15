@@ -152,6 +152,81 @@
             .footer-grid { grid-template-columns: 1fr; }
         }
     </style>
+
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my data safe and secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All files are processed using SSL/TLS encrypted connections. Uploaded documents are only accessible during processing and automatically deleted after 1 hour. We do not store, share, or access your document contents."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum file size?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The maximum file size is 20MB. If your PDF is larger, split it into smaller sections or compress it before uploading."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the OCR?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our PaddleOCR engine achieves 95%+ accuracy on clear, well-scanned documents. Accuracy depends on scan quality, contrast, and font clarity. Handwritten text is not supported."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What format is the output file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Output is .docx (Microsoft Word format), compatible with Word, Google Docs, LibreOffice, and Apple Pages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is FlipDoc free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely free. No subscription, no credit card, no hidden limits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to create an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No registration required. Convert PDFs immediately without providing any personal information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work on scanned PDFs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. PaddleOCR is designed for scanned documents and images. Best results from PDFs with good contrast and straight pages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can FlipDoc convert password-protected PDFs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Remove the password protection from your PDF before uploading."
+          }
+        }
+      ]
+    }
+    </script>
+    <link rel="canonical" href="https://flipdocconverter.vercel.app/faq">
 </head>
 <body>
 

@@ -169,6 +169,34 @@
             .step-title { font-size: 20px; }
         }
     </style>
+
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Convert PDF to Word",
+      "description": "Convert any PDF to an editable Word document using FlipDoc's AI-powered OCR converter.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Upload Your PDF",
+          "text": "Drag and drop your PDF file or click to browse. Maximum file size is 20MB. Supports text-based and scanned PDFs."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "AI Processes Your Document",
+          "text": "FlipDoc's PaddleOCR engine scans the document, detects tables, extracts images, and preserves layout. Average time: 28 seconds."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Download Your Word File",
+          "text": "Download the converted .docx file. Compatible with Microsoft Word, Google Docs, and LibreOffice."
+        }
+      ]
+    }
+    </script>
+    <link rel="canonical" href="https://flipdocconverter.vercel.app/how-to-convert-pdf-to-word">
 </head>
 <body>
 
@@ -231,14 +259,14 @@
             <div class="timeline-step" data-reveal>
                 <span class="step-number">02</span>
                 <h3 class="step-title">AI Processes Your Document</h3>
-                <p class="step-desc">OCR runs, tables are detected, images are extracted. Average completion: 28 seconds.</p>
+                <p class="step-desc">OCR runs, tables are detected, images are extracted. Most documents complete in under a minute.</p>
                 <div class="step-visual">
                     <div class="terminal-mini">
                         <span>Scanning document...</span> <span style="color:var(--border);">████████</span><span style="color:var(--accent);">██</span> 80%<br>
                         <span>Running OCR pass...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
                         <span>Preserving layout...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
                         <span>Exporting to .docx...</span> <span style="color:var(--accent);">██████████</span> 100% <span class="grn">&check;</span><br>
-                        <span class="grn">Conversion complete in 28s</span>
+                        <span class="grn">Conversion complete</span>
                     </div>
                 </div>
             </div>
@@ -261,34 +289,32 @@
     </div>
 </section>
 
-<!-- FAQ STRIP -->
-<section class="section-sm">
+<!-- TIPS FOR BEST RESULTS -->
+<section class="section">
     <div class="container-sm">
         <div class="section-header" data-reveal>
-            <p class="eyebrow">[ QUICK ANSWERS ]</p>
-            <h2 class="h2">Common questions</h2>
+            <p class="eyebrow">[ TIPS FOR BEST RESULTS ]</p>
+            <h2 class="h2">Get the most accurate conversion</h2>
         </div>
-        <div class="faq-accordion" data-reveal>
-            <details class="faq-item">
-                <summary class="faq-question">Is my PDF data secure?</summary>
-                <div class="faq-answer">Yes. All uploads use SSL/TLS encryption. Files are processed in isolated environments and automatically deleted from our servers after 60 minutes. We never access, share, or store your document contents beyond the conversion window.</div>
-            </details>
-            <details class="faq-item">
-                <summary class="faq-question">What happens to my file after conversion?</summary>
-                <div class="faq-answer">Both your uploaded PDF and the converted DOCX are automatically purged from our servers 60 minutes after upload. We recommend downloading your converted file immediately. There is no way for us (or anyone else) to retrieve your files after they're deleted.</div>
-            </details>
-            <details class="faq-item">
-                <summary class="faq-question">Does it work on scanned PDFs?</summary>
-                <div class="faq-answer">Yes. Our PaddleOCR engine is designed specifically for scanned documents, images, and PDFs with embedded text. It achieves 95%+ accuracy on clear scans. Best results come from PDFs with good contrast, straight pages, and readable text.</div>
-            </details>
-            <details class="faq-item">
-                <summary class="faq-question">What's the file size limit?</summary>
-                <div class="faq-answer">20MB per file. This covers the vast majority of PDF documents — including multipage reports, presentations, and ebooks. If your file is larger, try splitting it into smaller sections before uploading.</div>
-            </details>
-            <details class="faq-item">
-                <summary class="faq-question">Can I convert multiple PDFs at once?</summary>
-                <div class="faq-answer">You can queue multiple conversions sequentially — upload one, start the conversion, then upload the next while the first processes. Each conversion runs independently. Full batch upload is coming in a future update.</div>
-            </details>
+
+        <div data-reveal style="margin-bottom:48px;">
+            <h3 style="font-family:'Inter',sans-serif;font-weight:700;font-size:20px;color:var(--text-primary);margin-bottom:16px;letter-spacing:-0.02em;">Understanding Your PDF Type</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--text-secondary);line-height:1.8;">Not all PDFs are created equal. Text-based PDFs are created digitally — exported from Word, Google Docs, or design software like InDesign. These contain actual text data, so FlipDoc extracts them instantly with near-perfect accuracy. Scanned PDFs, on the other hand, are photographs of physical pages — capture from a scanner, a phone camera, or a printed document that was re-digitized. Scanned PDFs go through our OCR engine, which reads the image and reconstructs the text. To check which type you have, open your PDF in any viewer and try selecting a line of text with your cursor. If you can highlight individual words, it's a text-based PDF. If the entire page selects as one rectangle or nothing happens at all, it's a scanned document that needs OCR processing.</p>
+        </div>
+
+        <div data-reveal style="margin-bottom:48px;">
+            <h3 style="font-family:'Inter',sans-serif;font-weight:700;font-size:20px;color:var(--text-primary);margin-bottom:16px;letter-spacing:-0.02em;">Getting the Best OCR Results</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--text-secondary);line-height:1.8;">OCR accuracy depends heavily on the quality of your source document. For the best results, scan your document at 300 DPI or higher — lower resolutions leave the engine guessing at letter shapes. Keep pages as straight as possible; excessive skew, rotation, or curvature forces the deskew algorithm to estimate corrections, which can introduce errors. High contrast between text and background is essential: black or dark text on a white or light background produces the most reliable output. Clean, printed fonts (serif or sans-serif) are well-supported, but handwriting, cursive script, and heavily stylized decorative fonts are not recognized reliably. Documents in languages using the Latin alphabet (English, French, Spanish, German, Portuguese, and others) produce the best results. If your original scan has low contrast — for example, faded photocopies or photos taken in dim lighting — consider increasing the contrast with a photo editor before uploading.</p>
+        </div>
+
+        <div data-reveal style="margin-bottom:48px;">
+            <h3 style="font-family:'Inter',sans-serif;font-weight:700;font-size:20px;color:var(--text-primary);margin-bottom:16px;letter-spacing:-0.02em;">After You Download: Cleaning Up in Word</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--text-secondary);line-height:1.8;">For most PDFs, the converted Word document will be ready to use immediately — text is selectable, images are in place, and tables are structured. Complex layouts, however, may need minor touch-ups. Multi-column magazine layouts, PDFs with heavy background graphics, or forms with uneven spacing might require small adjustments to paragraph spacing or table column widths after conversion. FlipDoc automatically detects heading levels (H1, H2, H3) based on font size and boldness, and you can fine-tune these in Word's Styles panel to match your preferred formatting. Image positioning may shift slightly depending on the complexity of the original layout — simply drag images to reposition them. Remember that the .docx file is fully editable: every word, every table cell, and every image is yours to modify, delete, or restyle just like any other Word document.</p>
+        </div>
+
+        <div data-reveal style="margin-bottom:48px;">
+            <h3 style="font-family:'Inter',sans-serif;font-weight:700;font-size:20px;color:var(--text-primary);margin-bottom:16px;letter-spacing:-0.02em;">When Conversion Fails</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--text-secondary);line-height:1.8;">A few common issues can prevent a successful conversion. Password-protected PDFs cannot be processed — remove the password from your PDF first using your PDF viewer's security settings, then upload the unlocked version. Corrupted files may produce errors or incomplete output; try re-exporting the PDF from the original application to generate a clean copy. The maximum file size is 20MB, and files exceeding this limit will be rejected — use a PDF compression tool or split large documents into smaller sections. If you're converting a very low-quality scan and the results are poor, pre-processing the image in a photo editor to boost contrast and reduce noise before creating the PDF can make a significant difference. If all else fails, try a fresh export from the source application — a clean, well-formed PDF is always the best starting point.</p>
         </div>
     </div>
 </section>
@@ -298,7 +324,7 @@
     <div class="container" data-reveal>
         <p class="eyebrow" style="margin-bottom:16px;">[ READY TO TRY? ]</p>
         <h2 class="h2">Upload your first PDF now.</h2>
-        <p class="body-text" style="margin:0 auto 32px;">28 seconds to a clean, editable Word document.</p>
+        <p class="body-text" style="margin:0 auto 32px;">A clean, editable Word document in under a minute.</p>
         <a href="/#upload" class="btn-primary">Convert Now &rarr;</a>
     </div>
 </section>

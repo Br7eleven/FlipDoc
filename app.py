@@ -146,6 +146,46 @@ def about():
                          title="About Our PDF to Word Converter Technology",
                          description="Learn about the advanced technology behind our PDF to Word converter and why it's the best choice for your conversion needs.")
 
+@app.route('/sitemap.xml')
+def sitemap():
+    """Dynamic XML sitemap for search engines"""
+    from flask import Response
+    import datetime
+    pages = [
+        ('https://flipdocconverter.vercel.app/', '1.0', 'daily'),
+        ('https://flipdocconverter.vercel.app/features', '0.8', 'monthly'),
+        ('https://flipdocconverter.vercel.app/how-to-convert-pdf-to-word', '0.9', 'monthly'),
+        ('https://flipdocconverter.vercel.app/faq', '0.8', 'monthly'),
+        ('https://flipdocconverter.vercel.app/about', '0.6', 'monthly'),
+        ('https://flipdocconverter.vercel.app/privacy', '0.4', 'yearly'),
+    ]
+    today = datetime.date.today().isoformat()
+    xml = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    for loc, priority, changefreq in pages:
+        xml.append(f'''  <url>
+    <loc>{loc}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>{changefreq}</changefreq>
+    <priority>{priority}</priority>
+  </url>''')
+    xml.append('</urlset>')
+    return Response('\n'.join(xml), mimetype='application/xml')
+
+@app.route('/robots.txt')
+def robots():
+    """Robots.txt for search engine crawling directives"""
+    from flask import Response
+    content = """User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /upload
+Disallow: /download/
+Disallow: /status/
+
+Sitemap: https://flipdocconverter.vercel.app/sitemap.xml"""
+    return Response(content, mimetype='text/plain')
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     """Handle file upload and start conversion"""
