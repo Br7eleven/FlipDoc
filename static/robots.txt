@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /upload
+Disallow: /download/
+Disallow: /status/
+
+Sitemap: https://flipdocconverter.vercel.app/sitemap.xml

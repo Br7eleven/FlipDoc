@@ -8,16 +8,19 @@
     <meta name="keywords" content="PDF to Word, PDF converter, online PDF to DOCX, OCR PDF, free PDF tool, FlipDoc, convert PDF">
     <meta name="author" content="FlipDoc by BR7 Technologies">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="{{ request.url }}">
+    <link rel="canonical" href="{{ canonical_url }}">
     <link rel="icon" type="image/x-icon" href="/image/favicon.ico">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% block og_title %}{{ title }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ description }}{% endblock %}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:site_name" content="FlipDoc - PDF to Word Converter">
-    <meta property="og:image" content="/image/preview.png">
+    <meta property="og:image" content="https://flipdocconverter.vercel.app/image/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -152,6 +155,33 @@
         }
     }
     </script>
+
+    <!-- WebSite Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FlipDoc",
+      "url": "https://flipdocconverter.vercel.app",
+      "description": "Free online PDF to Word converter with AI-powered OCR. 95%+ accuracy. No signup required.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "BR7 Technologies",
+        "url": "https://br7tech.dev"
+      }
+    }
+    </script>
+
+    <!-- Google Analytics: replace GA_MEASUREMENT_ID with your actual ID after AdSense approval -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
 </head>
 <body>
     <!-- Skip to content -->

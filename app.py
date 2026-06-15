@@ -63,7 +63,8 @@ logging.info(f"🚀 FlipDoc v2.0 started — OCR Engine: {_ocr.engine_name}")
 @app.route('/')
 def index():
     """Homepage with converter interface"""
-    return render_template('index.html', 
+    return render_template('index.html',
+                         canonical_url='https://flipdocconverter.vercel.app/',
                          title="Fast PDF to Word Converter Online - Convert PDF to DOCX",
                          description="Convert PDF files to Word documents quickly and securely. Supports text and scanned PDFs with OCR technology. Free online converter.")
 
@@ -71,6 +72,7 @@ def index():
 def features():
     """Features page"""
     return render_template('features.html',
+                         canonical_url='https://flipdocconverter.vercel.app/features',
                          title="Advanced PDF Conversion Features - PDF to Word Converter",
                          description="Discover powerful features of our PDF to Word converter including OCR support, batch processing, and format preservation.")
 
@@ -78,6 +80,7 @@ def features():
 def how_to():
     """How-to guide page"""
     return render_template('how_to.html',
+                         canonical_url='https://flipdocconverter.vercel.app/how-to-convert-pdf-to-word',
                          title="How to Convert PDF to Word Document - Step by Step Guide",
                          description="Learn how to convert PDF files to Word documents easily. Complete tutorial with tips for best results.")
 
@@ -85,6 +88,7 @@ def how_to():
 def faq():
     """FAQ page"""
     return render_template('faq.html',
+                         canonical_url='https://flipdocconverter.vercel.app/faq',
                          title="Frequently Asked Questions - PDF to Word Converter",
                          description="Find answers to common questions about PDF to Word conversion, file formats, and troubleshooting.")
 
@@ -92,6 +96,7 @@ def faq():
 def privacy():
     """Privacy policy page"""
     return render_template('privacy.html',
+                         canonical_url='https://flipdocconverter.vercel.app/privacy',
                          title="Privacy Policy - FlipDoc",
                          description="Learn how FlipDoc protects your data and privacy. Files encrypted, auto-deleted after 1 hour. No registration required. Your documents stay private.")
 
@@ -143,8 +148,17 @@ def debug_assets():
 def about():
     """About page"""
     return render_template('about.html',
+                         canonical_url='https://flipdocconverter.vercel.app/about',
                          title="About Our PDF to Word Converter Technology",
                          description="Learn about the advanced technology behind our PDF to Word converter and why it's the best choice for your conversion needs.")
+
+@app.route('/blog')
+def blog():
+    """Blog index page — coming soon"""
+    return render_template('blog.html',
+                         canonical_url='https://flipdocconverter.vercel.app/blog',
+                         title="FlipDoc Blog — PDF Tips & Guides",
+                         description="Guides on PDF conversion, OCR technology, and document editing tips from the FlipDoc team.")
 
 @app.route('/sitemap.xml')
 def sitemap():
@@ -158,6 +172,7 @@ def sitemap():
         ('https://flipdocconverter.vercel.app/faq', '0.8', 'monthly'),
         ('https://flipdocconverter.vercel.app/about', '0.6', 'monthly'),
         ('https://flipdocconverter.vercel.app/privacy', '0.4', 'yearly'),
+        ('https://flipdocconverter.vercel.app/blog', '0.7', 'monthly'),
     ]
     today = datetime.date.today().isoformat()
     xml = ['<?xml version="1.0" encoding="UTF-8"?>']
